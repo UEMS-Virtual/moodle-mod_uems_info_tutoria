@@ -13,8 +13,8 @@
 
 /* ── Switcher shell (student view container) ── */
 .mod-uems-info-tutoria .uit-switcher-shell {
-    background: var(--bs-white, #fff);
-    border: 1px solid var(--bs-border-color-translucent, rgba(0, 0, 0, .06));
+    background: var(--white, #fff);
+    border: 1px solid rgba(0, 0, 0, .06);
     border-radius: 1.75rem;
     box-shadow: 0 22px 55px rgba(15, 23, 42, .12);
     overflow: hidden;
@@ -27,13 +27,13 @@
     align-items: center;
     gap: 1.125rem;
     padding: 1rem 1.125rem;
-    border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+    border-bottom: 1px solid #dee2e6;
     background: #fbfdff;
 }
 
 .mod-uems-info-tutoria .uit-switcher-title {
     font-weight: 900;
-    color: var(--bs-primary);
+    color: var(--primary, #0f6cbf);
     letter-spacing: .08em;
     text-transform: uppercase;
     font-size: .75rem;
@@ -43,7 +43,7 @@
     display: flex;
     gap: .375rem;
     padding: .25rem;
-    border: 1px solid var(--bs-border-color, #dee2e6);
+    border: 1px solid #dee2e6;
     border-radius: 999px;
     background: #f7fafc;
 }
@@ -54,16 +54,16 @@
     border-radius: 999px;
     padding: .5rem .8125rem;
     font-weight: 800;
-    color: var(--bs-secondary-color, #6c757d);
+    color: var(--gray, #6a737b);
     cursor: pointer;
     transition: background .15s, color .15s, box-shadow .15s;
     font-size: .875rem;
 }
 
 .mod-uems-info-tutoria .uit-toggle-btn[aria-selected="true"] {
-    background: var(--bs-primary);
+    background: var(--primary, #0f6cbf);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), .22);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
 }
 
 /* ── Stage (animated container) ── */
@@ -121,7 +121,7 @@
 
 /* ── Green side panel + hero ── */
 .mod-uems-info-tutoria .uit-green-panel {
-    background: var(--bs-primary);
+    background: var(--primary, #0f6cbf);
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -203,7 +203,7 @@
 
 .mod-uems-info-tutoria .uit-intro {
     margin: 0 0 1.75rem;
-    color: var(--bs-secondary-color, #6c757d);
+    color: var(--gray, #6a737b);
     line-height: 1.55;
     max-width: 520px;
 }
@@ -215,7 +215,7 @@
 
 /* ── Cards (student view) ── */
 .mod-uems-info-tutoria .uit-card {
-    border: 1px solid var(--bs-border-color, #dee2e6);
+    border: 1px solid #dee2e6;
     border-radius: 1.375rem;
     padding: 1.25rem;
     background: linear-gradient(180deg, #fff, #fbfdff);
@@ -244,7 +244,7 @@
 }
 
 .mod-uems-info-tutoria .uit-full-panel {
-    border: 1px solid var(--bs-border-color, #dee2e6);
+    border: 1px solid #dee2e6;
     border-radius: 1.5rem;
     padding: 1.375rem;
     background: linear-gradient(180deg, #fff, #fbfdff);
@@ -253,14 +253,14 @@
 
 /* ── Shared role title ── */
 .mod-uems-info-tutoria .uit-role-title {
-    color: var(--bs-primary);
+    color: var(--primary, #0f6cbf);
     font-size: .8125rem;
     font-weight: 900;
     letter-spacing: .10em;
     text-transform: uppercase;
     margin: 0 0 1rem;
     padding-left: .75rem;
-    border-left: 4px solid var(--bs-primary);
+    border-left: 4px solid var(--primary, #0f6cbf);
 }
 
 /* ── People lists ── */
@@ -335,7 +335,7 @@
 
 /* ── Polos text (full view) ── */
 .mod-uems-info-tutoria .uit-polos {
-    color: var(--bs-body-color);
+    color: var(--dark, #343a40);
     font-size: .875rem;
     line-height: 1.45;
     text-align: right;
@@ -344,7 +344,7 @@
 
 .mod-uems-info-tutoria .uit-polos-label {
     display: block;
-    color: var(--bs-secondary-color, #6c757d);
+    color: var(--gray, #6a737b);
     font-size: .75rem;
     font-weight: 900;
     text-transform: uppercase;
@@ -354,7 +354,7 @@
 
 /* ── Empty state ── */
 .mod-uems-info-tutoria .uit-empty {
-    color: var(--bs-secondary-color, #6c757d);
+    color: var(--gray, #6a737b);
     font-size: .9375rem;
     margin: 0;
 }
