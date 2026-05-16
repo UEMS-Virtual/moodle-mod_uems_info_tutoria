@@ -71,11 +71,29 @@ function uemsinfotutoria_get_coursemodule_info(stdClass $coursemodule): ?cached_
 }
 
 /**
- * Mark this module as a custom inline course-list item (no icon, no title link).
+ * Render the plugin content inline on the course page (Label-style).
+ *
+ * set_custom_cmlist_item(true) suppresses icon and title; set_content() provides
+ * the actual HTML that appears in the course section.
  *
  * @param cm_info $cm Course-module info object.
  */
 function uemsinfotutoria_cm_info_view(cm_info $cm): void {
+    global $DB, $PAGE;
+
+    $instance = $DB->get_record('uemsinfotutoria', ['id' => $cm->instance]);
+    if (!$instance) {
+        $cm->set_custom_cmlist_item(true);
+        return;
+    }
+
+    $course  = get_course($cm->course);
+    $context = context_module::instance($cm->id);
+
+    $renderer   = $PAGE->get_renderer('mod_uemsinfotutoria');
+    $renderable = new \mod_uemsinfotutoria\output\tutoria_page($instance, $cm, $course, $context);
+
+    $cm->set_content($renderer->render($renderable));
     $cm->set_custom_cmlist_item(true);
 }
 

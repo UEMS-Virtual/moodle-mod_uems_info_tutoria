@@ -35,8 +35,8 @@ class tutoria_page implements \renderable, \templatable {
     /** @var stdClass Activity instance. */
     private stdClass $instance;
 
-    /** @var stdClass Course module (cm_info or plain stdClass). */
-    private stdClass $cm;
+    /** @var object Course module (cm_info or plain stdClass). */
+    private object $cm;
 
     /** @var stdClass Course record. */
     private stdClass $course;
@@ -51,14 +51,14 @@ class tutoria_page implements \renderable, \templatable {
      * Constructor.
      *
      * @param stdClass         $instance Activity instance record.
-     * @param stdClass         $cm       Course module record.
+     * @param object           $cm       Course module record (stdClass or cm_info).
      * @param stdClass         $course   Course record.
      * @param \context_module  $context  Module context.
      * @param int              $userid   Viewing user id (defaults to $USER->id).
      */
     public function __construct(
         stdClass $instance,
-        stdClass $cm,
+        object $cm,
         stdClass $course,
         \context_module $context,
         int $userid = 0
