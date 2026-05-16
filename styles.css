@@ -1,0 +1,39 @@
+/**
+ * Styles for mod_uems_info_tutoria.
+ *
+ * Keep all selectors scoped to the activity root. Final colours should follow
+ * Moodle theme variables; fallback values are only for themes without them.
+ */
+
+.mod-uems-info-tutoria {
+    --mod-uems-info-tutoria-primary: var(--primary, #006b5f);
+    --mod-uems-info-tutoria-border: var(--bs-border-color, #dfe7ee);
+    --mod-uems-info-tutoria-surface: var(--bs-body-bg, #fff);
+    --mod-uems-info-tutoria-muted: var(--bs-secondary-color, #64748b);
+}
+
+.mod-uems-info-tutoria__intro {
+    margin-bottom: 1rem;
+}
+
+.mod-uems-info-tutoria__placeholder {
+    background: var(--mod-uems-info-tutoria-surface);
+    border: 1px solid var(--mod-uems-info-tutoria-border);
+    border-radius: .75rem;
+    padding: 1rem;
+}
+
+.mod-uems-info-tutoria__title {
+    border-left: .25rem solid var(--mod-uems-info-tutoria-primary);
+    color: var(--mod-uems-info-tutoria-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 .75rem;
+    padding-left: .75rem;
+    text-transform: uppercase;
+}
+
+.mod-uems-info-tutoria__placeholder p:last-child {
+    color: var(--mod-uems-info-tutoria-muted);
+    margin-bottom: 0;
+}

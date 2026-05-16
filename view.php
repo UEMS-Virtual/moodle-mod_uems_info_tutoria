@@ -24,6 +24,8 @@
 
 require(__DIR__ . '/../../config.php');
 
+use mod_uems_info_tutoria\output\tutoria_page;
+
 $id = optional_param('id', 0, PARAM_INT); // Course module id.
 $n = optional_param('n', 0, PARAM_INT); // Instance id.
 
@@ -54,8 +56,7 @@ $completion->set_module_viewed($cm);
 echo $OUTPUT->header();
 echo $OUTPUT->heading(format_string($uemsinfotutoria->name));
 
-echo format_module_intro('uems_info_tutoria', $uemsinfotutoria, $cm->id);
-
-echo $OUTPUT->notification(get_string('placeholdercontent', 'uems_info_tutoria'), 'info', false);
+$renderer = $PAGE->get_renderer('mod_uems_info_tutoria');
+echo $renderer->render(new tutoria_page($uemsinfotutoria, $cm));
 
 echo $OUTPUT->footer();
