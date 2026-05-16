@@ -33,7 +33,7 @@
 
 .mod-uems-info-tutoria .uit-switcher-title {
     font-weight: 900;
-    color: var(--primary, #006b5f);
+    color: var(--bs-primary);
     letter-spacing: .08em;
     text-transform: uppercase;
     font-size: .75rem;
@@ -61,9 +61,9 @@
 }
 
 .mod-uems-info-tutoria .uit-toggle-btn[aria-selected="true"] {
-    background: var(--primary, #006b5f);
+    background: var(--bs-primary);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 107, 95, .22);
+    box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), .22);
 }
 
 /* ── Stage (animated container) ── */
@@ -121,9 +121,7 @@
 
 /* ── Green side panel + hero ── */
 .mod-uems-info-tutoria .uit-green-panel {
-    background:
-        linear-gradient(160deg, rgba(255, 255, 255, .08), transparent 38%),
-        linear-gradient(180deg, var(--primary, #006b5f), #06463f);
+    background: var(--bs-primary);
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -255,14 +253,14 @@
 
 /* ── Shared role title ── */
 .mod-uems-info-tutoria .uit-role-title {
-    color: var(--primary, #006b5f);
+    color: var(--bs-primary);
     font-size: .8125rem;
     font-weight: 900;
     letter-spacing: .10em;
     text-transform: uppercase;
     margin: 0 0 1rem;
     padding-left: .75rem;
-    border-left: 4px solid var(--primary, #006b5f);
+    border-left: 4px solid var(--bs-primary);
 }
 
 /* ── People lists ── */
@@ -337,7 +335,7 @@
 
 /* ── Polos text (full view) ── */
 .mod-uems-info-tutoria .uit-polos {
-    color: var(--primary-dark, #24534d);
+    color: var(--bs-body-color);
     font-size: .875rem;
     line-height: 1.45;
     text-align: right;
