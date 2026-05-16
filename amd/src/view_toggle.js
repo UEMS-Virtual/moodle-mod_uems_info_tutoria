@@ -26,7 +26,7 @@
 
 const SELECTORS = {
     SHELL:   '[data-region="uemsinfotutoria-switcher"]',
-    STAGE:   '#uit-stage',
+    STAGE:   '.uit-stage',
     BUTTON:  '[data-view]',
     PANEL:   '[data-panel]',
     ACTIVE:  'uit-view--active',
@@ -74,7 +74,7 @@ function showView(stage, current, next, buttons, nextName) {
     stage.style.height = startH + 'px';
     // Force layout so the browser registers the explicit height before we change it.
     // eslint-disable-next-line no-unused-expressions
-    stage.offsetHeight;
+    void stage.offsetHeight; // força o browser a assumir a altura inicial.
 
     stage.classList.add(SELECTORS.ANIM);
     current.classList.add(SELECTORS.LEAVING);
