@@ -13,8 +13,8 @@
 
 /* ── Switcher shell (student view container) ── */
 .mod-uems-info-tutoria .uit-switcher-shell {
-    background: var(--white, #fff);
-    border: 1px solid var(--border-color, rgba(15, 23, 42, .06));
+    background: var(--bs-white, #fff);
+    border: 1px solid var(--bs-border-color-translucent, rgba(0, 0, 0, .06));
     border-radius: 1.75rem;
     box-shadow: 0 22px 55px rgba(15, 23, 42, .12);
     overflow: hidden;
@@ -27,7 +27,7 @@
     align-items: center;
     gap: 1.125rem;
     padding: 1rem 1.125rem;
-    border-bottom: 1px solid var(--border-color, #dfe7ee);
+    border-bottom: 1px solid var(--bs-border-color, #dee2e6);
     background: #fbfdff;
 }
 
@@ -43,7 +43,7 @@
     display: flex;
     gap: .375rem;
     padding: .25rem;
-    border: 1px solid var(--border-color, #dfe7ee);
+    border: 1px solid var(--bs-border-color, #dee2e6);
     border-radius: 999px;
     background: #f7fafc;
 }
@@ -54,7 +54,7 @@
     border-radius: 999px;
     padding: .5rem .8125rem;
     font-weight: 800;
-    color: var(--secondary, #64748b);
+    color: var(--bs-secondary-color, #6c757d);
     cursor: pointer;
     transition: background .15s, color .15s, box-shadow .15s;
     font-size: .875rem;
@@ -203,7 +203,7 @@
 
 .mod-uems-info-tutoria .uit-intro {
     margin: 0 0 1.75rem;
-    color: var(--secondary, #64748b);
+    color: var(--bs-secondary-color, #6c757d);
     line-height: 1.55;
     max-width: 520px;
 }
@@ -215,7 +215,7 @@
 
 /* ── Cards (student view) ── */
 .mod-uems-info-tutoria .uit-card {
-    border: 1px solid var(--border-color, #dfe7ee);
+    border: 1px solid var(--bs-border-color, #dee2e6);
     border-radius: 1.375rem;
     padding: 1.25rem;
     background: linear-gradient(180deg, #fff, #fbfdff);
@@ -244,7 +244,7 @@
 }
 
 .mod-uems-info-tutoria .uit-full-panel {
-    border: 1px solid var(--border-color, #dfe7ee);
+    border: 1px solid var(--bs-border-color, #dee2e6);
     border-radius: 1.5rem;
     padding: 1.375rem;
     background: linear-gradient(180deg, #fff, #fbfdff);
@@ -344,7 +344,7 @@
 
 .mod-uems-info-tutoria .uit-polos-label {
     display: block;
-    color: var(--secondary, #64748b);
+    color: var(--bs-secondary-color, #6c757d);
     font-size: .75rem;
     font-weight: 900;
     text-transform: uppercase;
@@ -354,7 +354,7 @@
 
 /* ── Empty state ── */
 .mod-uems-info-tutoria .uit-empty {
-    color: var(--secondary, #64748b);
+    color: var(--bs-secondary-color, #6c757d);
     font-size: .9375rem;
     margin: 0;
 }
