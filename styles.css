@@ -503,18 +503,10 @@
 
 /* ═══════════════════════════════════════════
    Responsive — mobile pequeno (≤ 420px)
-   Margem negativa no wrapper raiz para avançar
-   sobre o padding do container do Moodle e usar
-   toda a largura disponível.
 ═══════════════════════════════════════════ */
 @media (max-width: 420px) {
-    .mod-uems-info-tutoria {
-        margin-left: -1rem;
-        margin-right: -1rem;
-    }
-
     .mod-uems-info-tutoria .uit-switcher-shell {
-        border-radius: 0;
+        border-radius: .5rem;
     }
 
     .mod-uems-info-tutoria .uit-student-side,
