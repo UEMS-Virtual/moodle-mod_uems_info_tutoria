@@ -1,39 +1,460 @@
 /**
- * Styles for mod_uems_info_tutoria.
- *
- * Keep all selectors scoped to the activity root. Final colours should follow
- * Moodle theme variables; fallback values are only for themes without them.
+ * Styles for mod_uemsinfotutoria.
+ * All rules are scoped under .mod-uems-info-tutoria to avoid theme conflicts.
+ * Colours follow Moodle/Boost theme variables wherever possible.
  */
 
-.mod-uems-info-tutoria {
-    --mod-uems-info-tutoria-primary: var(--primary, #006b5f);
-    --mod-uems-info-tutoria-border: var(--bs-border-color, #dfe7ee);
-    --mod-uems-info-tutoria-surface: var(--bs-body-bg, #fff);
-    --mod-uems-info-tutoria-muted: var(--bs-secondary-color, #64748b);
+/* ── Reset inside scope ── */
+.mod-uems-info-tutoria *,
+.mod-uems-info-tutoria *::before,
+.mod-uems-info-tutoria *::after {
+    box-sizing: border-box;
 }
 
-.mod-uems-info-tutoria__intro {
-    margin-bottom: 1rem;
+/* ── Switcher shell (student view container) ── */
+.mod-uems-info-tutoria .uit-switcher-shell {
+    background: var(--white, #fff);
+    border: 1px solid var(--border-color, rgba(15, 23, 42, .06));
+    border-radius: 1.75rem;
+    box-shadow: 0 22px 55px rgba(15, 23, 42, .12);
+    overflow: hidden;
 }
 
-.mod-uems-info-tutoria__placeholder {
-    background: var(--mod-uems-info-tutoria-surface);
-    border: 1px solid var(--mod-uems-info-tutoria-border);
-    border-radius: .75rem;
-    padding: 1rem;
+/* ── Switcher top bar (title + toggle buttons) ── */
+.mod-uems-info-tutoria .uit-switcher-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.125rem;
+    padding: 1rem 1.125rem;
+    border-bottom: 1px solid var(--border-color, #dfe7ee);
+    background: #fbfdff;
 }
 
-.mod-uems-info-tutoria__title {
-    border-left: .25rem solid var(--mod-uems-info-tutoria-primary);
-    color: var(--mod-uems-info-tutoria-primary);
-    font-size: 1rem;
-    font-weight: 700;
-    margin: 0 0 .75rem;
-    padding-left: .75rem;
+.mod-uems-info-tutoria .uit-switcher-title {
+    font-weight: 900;
+    color: var(--primary, #006b5f);
+    letter-spacing: .08em;
     text-transform: uppercase;
+    font-size: .75rem;
 }
 
-.mod-uems-info-tutoria__placeholder p:last-child {
-    color: var(--mod-uems-info-tutoria-muted);
-    margin-bottom: 0;
+.mod-uems-info-tutoria .uit-toggle {
+    display: flex;
+    gap: .375rem;
+    padding: .25rem;
+    border: 1px solid var(--border-color, #dfe7ee);
+    border-radius: 999px;
+    background: #f7fafc;
+}
+
+.mod-uems-info-tutoria .uit-toggle-btn {
+    border: 0;
+    background: transparent;
+    border-radius: 999px;
+    padding: .5rem .8125rem;
+    font-weight: 800;
+    color: var(--secondary, #64748b);
+    cursor: pointer;
+    transition: background .15s, color .15s, box-shadow .15s;
+    font-size: .875rem;
+}
+
+.mod-uems-info-tutoria .uit-toggle-btn[aria-selected="true"] {
+    background: var(--primary, #006b5f);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 107, 95, .22);
+}
+
+/* ── Stage (animated container) ── */
+.mod-uems-info-tutoria .uit-stage {
+    position: relative;
+    overflow: hidden;
+}
+
+.mod-uems-info-tutoria .uit-view {
+    display: none;
+}
+
+.mod-uems-info-tutoria .uit-view--active {
+    display: block;
+}
+
+/* Temporary class for measuring hidden panels off-screen */
+.mod-uems-info-tutoria .uit-view--measure {
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+/* Animation state */
+.mod-uems-info-tutoria .uit-stage--animating {
+    transition: height .28s ease;
+}
+
+.mod-uems-info-tutoria .uit-stage--animating .uit-view {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+.mod-uems-info-tutoria .uit-stage--animating .uit-view--active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.mod-uems-info-tutoria .uit-stage--animating .uit-view--leaving {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+}
+
+/* ── Green side panel + hero ── */
+.mod-uems-info-tutoria .uit-green-panel {
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, .08), transparent 38%),
+        linear-gradient(180deg, var(--primary, #006b5f), #06463f);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.mod-uems-info-tutoria .uit-green-panel::before {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    right: -110px;
+    top: -80px;
+    border: 32px solid rgba(255, 255, 255, .08);
+}
+
+/* ── Student cover layout ── */
+.mod-uems-info-tutoria .uit-student-cover {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    min-height: 430px;
+}
+
+.mod-uems-info-tutoria .uit-student-side {
+    padding: 2.125rem 1.875rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mod-uems-info-tutoria .uit-kicker {
+    position: relative;
+    z-index: 1;
+    font-size: .75rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    opacity: .78;
+}
+
+.mod-uems-info-tutoria .uit-big-title {
+    position: relative;
+    z-index: 1;
+    margin-top: .75rem;
+    font-size: 2.125rem;
+    line-height: 1.03;
+    font-weight: 900;
+    letter-spacing: -.04em;
+}
+
+.mod-uems-info-tutoria .uit-polo-name {
+    position: relative;
+    z-index: 1;
+    padding-top: 1.625rem;
+    border-top: 1px solid rgba(255, 255, 255, .22);
+}
+
+.mod-uems-info-tutoria .uit-polo-label {
+    font-size: .75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    opacity: .72;
+    margin-bottom: .5rem;
+}
+
+.mod-uems-info-tutoria .uit-polo-value {
+    font-size: 1.3125rem;
+    line-height: 1.22;
+    font-weight: 900;
+}
+
+.mod-uems-info-tutoria .uit-student-content {
+    padding: 2.125rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mod-uems-info-tutoria .uit-intro {
+    margin: 0 0 1.75rem;
+    color: var(--secondary, #64748b);
+    line-height: 1.55;
+    max-width: 520px;
+}
+
+.mod-uems-info-tutoria .uit-team-line {
+    display: grid;
+    gap: 1.375rem;
+}
+
+/* ── Cards (student view) ── */
+.mod-uems-info-tutoria .uit-card {
+    border: 1px solid var(--border-color, #dfe7ee);
+    border-radius: 1.375rem;
+    padding: 1.25rem;
+    background: linear-gradient(180deg, #fff, #fbfdff);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
+}
+
+/* ── Full hero ── */
+.mod-uems-info-tutoria .uit-full-hero {
+    padding: 2.125rem;
+}
+
+.mod-uems-info-tutoria .uit-full-intro {
+    position: relative;
+    z-index: 1;
+    margin: .75rem 0 0;
+    opacity: .88;
+    max-width: 760px;
+    line-height: 1.5;
+}
+
+/* ── Full view content ── */
+.mod-uems-info-tutoria .uit-full-content {
+    padding: 1.875rem 2.125rem 2.25rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.mod-uems-info-tutoria .uit-full-panel {
+    border: 1px solid var(--border-color, #dfe7ee);
+    border-radius: 1.5rem;
+    padding: 1.375rem;
+    background: linear-gradient(180deg, #fff, #fbfdff);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
+}
+
+/* ── Shared role title ── */
+.mod-uems-info-tutoria .uit-role-title {
+    color: var(--primary, #006b5f);
+    font-size: .8125rem;
+    font-weight: 900;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    padding-left: .75rem;
+    border-left: 4px solid var(--primary, #006b5f);
+}
+
+/* ── People lists ── */
+.mod-uems-info-tutoria .uit-people-list {
+    display: grid;
+    gap: 1rem;
+}
+
+/* Compact person (student view) */
+.mod-uems-info-tutoria .uit-person {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.mod-uems-info-tutoria .uit-person:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+/* Full person (full view) */
+.mod-uems-info-tutoria .uit-full-person {
+    display: grid;
+    grid-template-columns: 72px minmax(380px, 1fr) 190px;
+    gap: 1.125rem;
+    align-items: center;
+    padding-bottom: 1.125rem;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.mod-uems-info-tutoria .uit-full-person:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+/* ── Photo ── */
+.mod-uems-info-tutoria .uit-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 1.125rem;
+    object-fit: cover;
+    border: 1px solid #d8e6e3;
+    background: #eef8f6;
+}
+
+.mod-uems-info-tutoria .uit-full-person .uit-photo {
+    width: 72px;
+    height: 72px;
+    border-radius: 1.25rem;
+}
+
+/* ── Name ── */
+.mod-uems-info-tutoria .uit-name {
+    font-size: 1.375rem;
+    line-height: 1.15;
+    font-weight: 900;
+    margin-bottom: .3125rem;
+}
+
+.mod-uems-info-tutoria .uit-name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.mod-uems-info-tutoria .uit-name a:hover,
+.mod-uems-info-tutoria .uit-name a:focus {
+    text-decoration: underline;
+}
+
+/* ── Polos text (full view) ── */
+.mod-uems-info-tutoria .uit-polos {
+    color: var(--primary-dark, #24534d);
+    font-size: .875rem;
+    line-height: 1.45;
+    text-align: right;
+    font-weight: 700;
+}
+
+.mod-uems-info-tutoria .uit-polos-label {
+    display: block;
+    color: var(--secondary, #64748b);
+    font-size: .75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: .25rem;
+}
+
+/* ── Empty state ── */
+.mod-uems-info-tutoria .uit-empty {
+    color: var(--secondary, #64748b);
+    font-size: .9375rem;
+    margin: 0;
+}
+
+/* ═══════════════════════════════════════════
+   Responsive — tablet (≤ 820px)
+═══════════════════════════════════════════ */
+@media (max-width: 820px) {
+    .mod-uems-info-tutoria .uit-switcher-shell {
+        border-radius: 1.125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-switcher-top {
+        display: block;
+    }
+
+    .mod-uems-info-tutoria .uit-toggle {
+        margin-top: .75rem;
+        width: max-content;
+        max-width: 100%;
+    }
+
+    .mod-uems-info-tutoria .uit-student-cover {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .mod-uems-info-tutoria .uit-student-side,
+    .mod-uems-info-tutoria .uit-full-hero {
+        padding: 1.5rem;
+    }
+
+    .mod-uems-info-tutoria .uit-big-title {
+        font-size: 1.8125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-polo-name {
+        padding-top: 1.125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-polo-value {
+        font-size: 1.125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-student-content,
+    .mod-uems-info-tutoria .uit-full-content {
+        padding: 1.375rem;
+    }
+
+    .mod-uems-info-tutoria .uit-card,
+    .mod-uems-info-tutoria .uit-full-panel {
+        padding: 1rem;
+        border-radius: 1.125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-photo,
+    .mod-uems-info-tutoria .uit-full-person .uit-photo {
+        width: 56px;
+        height: 56px;
+        border-radius: 1rem;
+    }
+
+    .mod-uems-info-tutoria .uit-name {
+        font-size: 1.1875rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person {
+        grid-template-columns: 56px 1fr;
+        gap: .8125rem;
+        align-items: start;
+    }
+
+    .mod-uems-info-tutoria .uit-polos {
+        grid-column: 2;
+        text-align: left;
+        font-size: .8125rem;
+    }
+}
+
+/* ═══════════════════════════════════════════
+   Responsive — mobile (≤ 420px)
+═══════════════════════════════════════════ */
+@media (max-width: 420px) {
+    .mod-uems-info-tutoria .uit-person,
+    .mod-uems-info-tutoria .uit-full-person {
+        grid-template-columns: 48px 1fr;
+        gap: .75rem;
+    }
+
+    .mod-uems-info-tutoria .uit-photo,
+    .mod-uems-info-tutoria .uit-full-person .uit-photo {
+        width: 48px;
+        height: 48px;
+        border-radius: .875rem;
+    }
+
+    .mod-uems-info-tutoria .uit-polos {
+        grid-column: 1 / -1;
+        padding-left: 60px;
+    }
 }

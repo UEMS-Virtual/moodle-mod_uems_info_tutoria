@@ -7,31 +7,139 @@
     (at your option) any later version.
 }}
 {{!
-    @template mod_uems_info_tutoria/tutoria_page
+    @template mod_uemsinfotutoria/tutoria_page
 
-    Base page for the tutoring information activity.
+    Main page template. Renders the student view (Meu polo + toggle) or the
+    full institutional view depending on the viewer's role.
 
-    Context variables required for this template:
-    * hasintro - Whether the activity has intro content.
-    * intro - Formatted module intro HTML.
-    * placeholder - Placeholder text shown until the data layer is implemented.
+    Context variables:
+    * isstudent            - bool
+    * polo_name            - string   (student only)
+    * has_polo             - bool     (student only)
+    * mine_mediator_label  - string   singular/plural (student only)
+    * mine_tutor_label     - string   singular/plural (student only)
+    * mine_mediators       - array    (student only)
+    * mine_tutors          - array    (student only)
+    * mine_has_mediators   - bool     (student only)
+    * mine_has_tutors      - bool     (student only)
+    * all_mediators        - array
+    * all_tutors           - array
+    * all_has_mediators    - bool
+    * all_has_tutors       - bool
+
+    Each member item:
+    * name            - string
+    * profileimageurl - string
+    * messageurl      - string
+    * polos_label     - string
+    * polos_text      - string
+    * has_polos       - bool
 
     Example context (json):
     {
-        "hasintro": true,
-        "intro": "<div class=\"no-overflow\">Intro text</div>",
-        "placeholder": "Tutoring and pedagogical mediation information will be displayed here."
+        "isstudent": true,
+        "polo_name": "Polo UAB de Bataguassu",
+        "has_polo": true,
+        "mine_mediator_label": "Mediador Pedagógico",
+        "mine_tutor_label": "Tutor Presencial",
+        "mine_mediators": [{"name": "Ana Paula Ribeiro", "profileimageurl": "/foto.jpg", "messageurl": "/message/index.php?id=5", "polos_label": "", "polos_text": "", "has_polos": false}],
+        "mine_tutors": [],
+        "mine_has_mediators": true,
+        "mine_has_tutors": false,
+        "all_mediators": [],
+        "all_tutors": [],
+        "all_has_mediators": false,
+        "all_has_tutors": false
     }
 }}
 <div class="mod-uems-info-tutoria">
-    {{#hasintro}}
-        <div class="mod-uems-info-tutoria__intro">
-            {{{intro}}}
-        </div>
-    {{/hasintro}}
 
-    <section class="mod-uems-info-tutoria__placeholder" aria-live="polite">
-        <h2 class="mod-uems-info-tutoria__title">{{#str}} pluginname, mod_uems_info_tutoria {{/str}}</h2>
-        <p>{{placeholder}}</p>
-    </section>
+{{#isstudent}}
+{{! ── Visão do estudante: alternância Meu polo / Lista completa ── }}
+<div class="uit-switcher-shell" data-region="uemsinfotutoria-switcher">
+    <div class="uit-switcher-top">
+        <span class="uit-switcher-title">{{#str}} informacoestutoria, uemsinfotutoria {{/str}}</span>
+        <div class="uit-toggle" role="tablist" aria-label="{{#str}} alternarvisualizacao, uemsinfotutoria {{/str}}">
+            <button type="button" role="tab" aria-selected="true" data-view="mine" class="uit-toggle-btn">
+                {{#str}} meupolo, uemsinfotutoria {{/str}}
+            </button>
+            <button type="button" role="tab" aria-selected="false" data-view="all" class="uit-toggle-btn">
+                {{#str}} listacompleta, uemsinfotutoria {{/str}}
+            </button>
+        </div>
+    </div>
+
+    <div class="uit-stage" id="uit-stage">
+
+        {{! ── View: Meu polo ── }}
+        <div class="uit-view uit-view--active" data-panel="mine">
+            <div class="uit-student-cover">
+                <aside class="uit-green-panel uit-student-side">
+                    <div>
+                        <div class="uit-kicker">{{#str}} informacoestutoria, uemsinfotutoria {{/str}}</div>
+                        <div class="uit-big-title">{{#str}} seuponto, uemsinfotutoria {{/str}}</div>
+                    </div>
+                    <div class="uit-polo-name">
+                        <div class="uit-polo-label">{{#str}} seupolo, uemsinfotutoria {{/str}}</div>
+                        <div class="uit-polo-value">
+                            {{#has_polo}}{{polo_name}}{{/has_polo}}
+                            {{^has_polo}}{{#str}} sempoloidentificado, uemsinfotutoria {{/str}}{{/has_polo}}
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="uit-student-content">
+                    <p class="uit-intro">{{#str}} intropolo, uemsinfotutoria {{/str}}</p>
+                    <div class="uit-team-line">
+
+                        <article class="uit-card">
+                            <h2 class="uit-role-title">{{mine_mediator_label}}</h2>
+                            {{#mine_has_mediators}}
+                            <div class="uit-people-list">
+                                {{#mine_mediators}}
+                                {{> mod_uemsinfotutoria/person_item_compact }}
+                                {{/mine_mediators}}
+                            </div>
+                            {{/mine_has_mediators}}
+                            {{^mine_has_mediators}}
+                            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+                            {{/mine_has_mediators}}
+                        </article>
+
+                        <article class="uit-card">
+                            <h2 class="uit-role-title">{{mine_tutor_label}}</h2>
+                            {{#mine_has_tutors}}
+                            <div class="uit-people-list">
+                                {{#mine_tutors}}
+                                {{> mod_uemsinfotutoria/person_item_compact }}
+                                {{/mine_tutors}}
+                            </div>
+                            {{/mine_has_tutors}}
+                            {{^mine_has_tutors}}
+                            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+                            {{/mine_has_tutors}}
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{! ── View: Lista completa ── }}
+        <div class="uit-view" data-panel="all">
+            {{> mod_uemsinfotutoria/full_view }}
+        </div>
+
+    </div>
 </div>
+{{/isstudent}}
+
+{{^isstudent}}
+{{! ── Visão institucional (demais papéis) ── }}
+{{> mod_uemsinfotutoria/full_view }}
+{{/isstudent}}
+
+</div>
+{{#js}}
+require(['mod_uemsinfotutoria/view_toggle'], function(module) { module.init(); });
+{{/js}}

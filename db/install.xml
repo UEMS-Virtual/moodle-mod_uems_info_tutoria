@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/uems_info_tutoria/db" VERSION="2026051600" COMMENT="XMLDB file for Moodle mod_uems_info_tutoria"
+<XMLDB PATH="mod/uemsinfotutoria/db" VERSION="2026051600" COMMENT="XMLDB file for Moodle mod_uemsinfotutoria"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
   <TABLES>
-    <TABLE NAME="uems_info_tutoria" COMMENT="Instances of the UEMS tutoring information activity">
+    <TABLE NAME="uemsinfotutoria" COMMENT="Instances of the UEMS tutoring information activity">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Course ID"/>

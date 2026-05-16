@@ -1,0 +1,59 @@
+{{!
+    @template mod_uemsinfotutoria/full_view
+
+    Full institutional view — shows all mediators and tutors with their polos.
+    Used for non-student roles and as the "Lista completa" panel for students.
+
+    Context variables (subset of tutoria_page context):
+    * all_mediators    - array of member items
+    * all_tutors       - array of member items
+    * all_has_mediators - bool
+    * all_has_tutors    - bool
+
+    Example context (json):
+    {
+        "all_has_mediators": true,
+        "all_mediators": [{"name": "Ana Paula", "profileimageurl": "/f.jpg", "messageurl": "/m", "polos_label": "Polos atendidos", "polos_text": "Bataguassu e Paranhos", "has_polos": true}],
+        "all_has_tutors": false,
+        "all_tutors": []
+    }
+}}
+<div class="uit-full-view">
+    <header class="uit-green-panel uit-full-hero">
+        <div class="uit-kicker">{{#str}} informacoestutoria, uemsinfotutoria {{/str}}</div>
+        <div class="uit-big-title">{{#str}} equipetutoria, uemsinfotutoria {{/str}}</div>
+        <p class="uit-full-intro">{{#str}} introfull, uemsinfotutoria {{/str}}</p>
+    </header>
+
+    <div class="uit-full-content">
+
+        <section class="uit-full-panel">
+            <h2 class="uit-role-title">{{#str}} mediadorespedagogicos, uemsinfotutoria {{/str}}</h2>
+            {{#all_has_mediators}}
+            <div class="uit-people-list">
+                {{#all_mediators}}
+                {{> mod_uemsinfotutoria/person_item_full }}
+                {{/all_mediators}}
+            </div>
+            {{/all_has_mediators}}
+            {{^all_has_mediators}}
+            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+            {{/all_has_mediators}}
+        </section>
+
+        <section class="uit-full-panel">
+            <h2 class="uit-role-title">{{#str}} tutorespresenciais, uemsinfotutoria {{/str}}</h2>
+            {{#all_has_tutors}}
+            <div class="uit-people-list">
+                {{#all_tutors}}
+                {{> mod_uemsinfotutoria/person_item_full }}
+                {{/all_tutors}}
+            </div>
+            {{/all_has_tutors}}
+            {{^all_has_tutors}}
+            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+            {{/all_has_tutors}}
+        </section>
+
+    </div>
+</div>

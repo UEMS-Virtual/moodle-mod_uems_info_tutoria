@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Library callbacks for mod_uems_info_tutoria.
+ * Library callbacks for mod_uemsinfotutoria.
  *
- * @package    mod_uems_info_tutoria
+ * @package    mod_uemsinfotutoria
  * @copyright  2026 UEMS Virtual
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,46 +30,85 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $feature Feature name.
  * @return mixed True if supported, null otherwise.
  */
-function uems_info_tutoria_supports(string $feature) {
+function uemsinfotutoria_supports(string $feature) {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
         case FEATURE_SHOW_DESCRIPTION:
+        case FEATURE_NO_VIEW_LINK:
             return true;
+        case FEATURE_MOD_ARCHETYPE:
+            return MOD_ARCHETYPE_RESOURCE;
         default:
             return null;
     }
 }
 
 /**
+ * Populate the course-module cache with inline content.
+ *
+ * Called during course rendering; the returned content replaces the normal
+ * activity link so the plugin displays directly on the course page (like Label).
+ *
+ * @param stdClass $coursemodule Course-module record.
+ * @return cached_cm_info|null
+ */
+function uemsinfotutoria_get_coursemodule_info(stdClass $coursemodule): ?cached_cm_info {
+    global $DB;
+
+    $instance = $DB->get_record(
+        'uemsinfotutoria',
+        ['id' => $coursemodule->instance],
+        'id, name, intro, introformat'
+    );
+    if (!$instance) {
+        return null;
+    }
+
+    $info = new cached_cm_info();
+    $info->name = $instance->name;
+    $info->content = format_module_intro('uemsinfotutoria', $instance, $coursemodule->id, false);
+    return $info;
+}
+
+/**
+ * Mark this module as a custom inline course-list item (no icon, no title link).
+ *
+ * @param cm_info $cm Course-module info object.
+ */
+function uemsinfotutoria_cm_info_view(cm_info $cm): void {
+    $cm->set_custom_cmlist_item(true);
+}
+
+/**
  * Add a new instance of the activity.
  *
  * @param stdClass $data Form data.
- * @param mod_uems_info_tutoria_mod_form|null $mform Form instance.
+ * @param mod_uemsinfotutoria_mod_form|null $mform Form instance.
  * @return int New instance id.
  */
-function uems_info_tutoria_add_instance(stdClass $data, ?mod_uems_info_tutoria_mod_form $mform = null): int {
+function uemsinfotutoria_add_instance(stdClass $data, ?mod_uemsinfotutoria_mod_form $mform = null): int {
     global $DB;
 
     $data->timecreated = time();
     $data->timemodified = $data->timecreated;
 
-    return $DB->insert_record('uems_info_tutoria', $data);
+    return $DB->insert_record('uemsinfotutoria', $data);
 }
 
 /**
  * Update an existing instance of the activity.
  *
  * @param stdClass $data Form data.
- * @param mod_uems_info_tutoria_mod_form|null $mform Form instance.
+ * @param mod_uemsinfotutoria_mod_form|null $mform Form instance.
  * @return bool
  */
-function uems_info_tutoria_update_instance(stdClass $data, ?mod_uems_info_tutoria_mod_form $mform = null): bool {
+function uemsinfotutoria_update_instance(stdClass $data, ?mod_uemsinfotutoria_mod_form $mform = null): bool {
     global $DB;
 
     $data->id = $data->instance;
     $data->timemodified = time();
 
-    return $DB->update_record('uems_info_tutoria', $data);
+    return $DB->update_record('uemsinfotutoria', $data);
 }
 
 /**
@@ -78,13 +117,13 @@ function uems_info_tutoria_update_instance(stdClass $data, ?mod_uems_info_tutori
  * @param int $id Instance id.
  * @return bool
  */
-function uems_info_tutoria_delete_instance(int $id): bool {
+function uemsinfotutoria_delete_instance(int $id): bool {
     global $DB;
 
-    if (!$DB->record_exists('uems_info_tutoria', ['id' => $id])) {
+    if (!$DB->record_exists('uemsinfotutoria', ['id' => $id])) {
         return false;
     }
 
-    $DB->delete_records('uems_info_tutoria', ['id' => $id]);
+    $DB->delete_records('uemsinfotutoria', ['id' => $id]);
     return true;
 }

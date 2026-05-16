@@ -1,0 +1,24 @@
+{{!
+    @template mod_uemsinfotutoria/person_item_compact
+
+    Compact person card — photo + name link + short note.
+    Used inside the student "Meu polo" view.
+
+    Context variables:
+    * name            - string
+    * profileimageurl - string
+    * messageurl      - string
+
+    Example context (json):
+    {
+        "name": "Ana Paula Ribeiro",
+        "profileimageurl": "/pluginfile.php/5/user/icon/f2",
+        "messageurl": "/message/index.php?id=5"
+    }
+}}
+<div class="uit-person">
+    <img class="uit-photo" src="{{profileimageurl}}" alt="{{#str}} fotode, uemsinfotutoria, {{name}} {{/str}}">
+    <div>
+        <div class="uit-name"><a href="{{messageurl}}">{{name}}</a></div>
+    </div>
+</div>

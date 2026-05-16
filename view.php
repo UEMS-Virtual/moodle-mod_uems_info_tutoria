@@ -15,48 +15,46 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * View page for mod_uems_info_tutoria.
+ * View page for mod_uemsinfotutoria.
  *
- * @package    mod_uems_info_tutoria
+ * @package    mod_uemsinfotutoria
  * @copyright  2026 UEMS Virtual
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require(__DIR__ . '/../../config.php');
 
-use mod_uems_info_tutoria\output\tutoria_page;
+use mod_uemsinfotutoria\output\tutoria_page;
 
-$id = optional_param('id', 0, PARAM_INT); // Course module id.
-$n = optional_param('n', 0, PARAM_INT); // Instance id.
+$id = optional_param('id', 0, PARAM_INT);
+$n  = optional_param('n',  0, PARAM_INT);
 
 if ($id) {
-    $cm = get_coursemodule_from_id('uems_info_tutoria', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
-    $uemsinfotutoria = $DB->get_record('uems_info_tutoria', ['id' => $cm->instance], '*', MUST_EXIST);
+    $cm               = get_coursemodule_from_id('uemsinfotutoria', $id, 0, false, MUST_EXIST);
+    $course           = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $uemsinfotutoria  = $DB->get_record('uemsinfotutoria', ['id' => $cm->instance], '*', MUST_EXIST);
 } else {
-    $uemsinfotutoria = $DB->get_record('uems_info_tutoria', ['id' => $n], '*', MUST_EXIST);
-    $course = $DB->get_record('course', ['id' => $uemsinfotutoria->course], '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('uems_info_tutoria', $uemsinfotutoria->id, $course->id, false, MUST_EXIST);
+    $uemsinfotutoria  = $DB->get_record('uemsinfotutoria', ['id' => $n], '*', MUST_EXIST);
+    $course           = $DB->get_record('course', ['id' => $uemsinfotutoria->course], '*', MUST_EXIST);
+    $cm               = get_coursemodule_from_instance('uemsinfotutoria', $uemsinfotutoria->id, $course->id, false, MUST_EXIST);
 }
 
 require_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/uems_info_tutoria:view', $context);
+require_capability('mod/uemsinfotutoria:view', $context);
 
-$PAGE->set_url('/mod/uems_info_tutoria/view.php', ['id' => $cm->id]);
+$PAGE->set_url('/mod/uemsinfotutoria/view.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($uemsinfotutoria->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-// Mark viewed for completion if enabled.
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(format_string($uemsinfotutoria->name));
 
-$renderer = $PAGE->get_renderer('mod_uems_info_tutoria');
-echo $renderer->render(new tutoria_page($uemsinfotutoria, $cm));
+$renderer = $PAGE->get_renderer('mod_uemsinfotutoria');
+echo $renderer->render(new tutoria_page($uemsinfotutoria, $cm, $course, $context));
 
 echo $OUTPUT->footer();

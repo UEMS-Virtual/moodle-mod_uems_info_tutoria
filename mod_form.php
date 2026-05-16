@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Instance form for mod_uems_info_tutoria.
+ * Instance form for mod_uemsinfotutoria.
  *
- * @package    mod_uems_info_tutoria
+ * @package    mod_uemsinfotutoria
  * @copyright  2026 UEMS Virtual
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,7 +29,7 @@ require_once($CFG->dirroot . '/course/moodleform_mod.php');
 /**
  * Activity instance form.
  */
-class mod_uems_info_tutoria_mod_form extends moodleform_mod {
+class mod_uemsinfotutoria_mod_form extends moodleform_mod {
     /**
      * Define the form.
      */
@@ -42,7 +42,7 @@ class mod_uems_info_tutoria_mod_form extends moodleform_mod {
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->setDefault('name', get_string('modulename', 'uems_info_tutoria'));
+        $mform->setDefault('name', get_string('modulename', 'uemsinfotutoria'));
 
         $this->standard_intro_elements();
 

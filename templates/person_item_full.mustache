@@ -1,0 +1,39 @@
+{{!
+    @template mod_uemsinfotutoria/person_item_full
+
+    Full person row — photo + name link + polos column.
+    Used inside the full institutional view.
+
+    Context variables:
+    * name            - string
+    * profileimageurl - string
+    * messageurl      - string
+    * polos_label     - string  e.g. "Polos atendidos" or "Polo"
+    * polos_text      - string  e.g. "Bataguassu e Paranhos"
+    * has_polos       - bool
+
+    Example context (json):
+    {
+        "name": "Ana Paula Ribeiro",
+        "profileimageurl": "/pluginfile.php/5/user/icon/f2",
+        "messageurl": "/message/index.php?id=5",
+        "polos_label": "Polos atendidos",
+        "polos_text": "Bataguassu e Paranhos",
+        "has_polos": true
+    }
+}}
+<article class="uit-full-person">
+    <img class="uit-photo" src="{{profileimageurl}}" alt="{{#str}} fotode, uemsinfotutoria, {{name}} {{/str}}">
+    <div>
+        <div class="uit-name"><a href="{{messageurl}}">{{name}}</a></div>
+    </div>
+    {{#has_polos}}
+    <div class="uit-polos">
+        <span class="uit-polos-label">{{polos_label}}</span>
+        {{polos_text}}
+    </div>
+    {{/has_polos}}
+    {{^has_polos}}
+    <div class="uit-polos"></div>
+    {{/has_polos}}
+</article>

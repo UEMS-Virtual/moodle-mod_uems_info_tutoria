@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Capability definitions for mod_uems_info_tutoria.
+ * Capability definitions for mod_uemsinfotutoria.
  *
- * @package    mod_uems_info_tutoria
+ * @package    mod_uemsinfotutoria
  * @copyright  2026 UEMS Virtual
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
-    'mod/uems_info_tutoria:addinstance' => [
+    'mod/uemsinfotutoria:addinstance' => [
         'riskbitmask' => RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -36,7 +36,7 @@ $capabilities = [
         'clonepermissionsfrom' => 'moodle/course:manageactivities',
     ],
 
-    'mod/uems_info_tutoria:view' => [
+    'mod/uemsinfotutoria:view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => [

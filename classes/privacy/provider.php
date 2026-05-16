@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy provider for mod_uems_info_tutoria.
+ * Privacy provider for mod_uemsinfotutoria.
  *
- * @package    mod_uems_info_tutoria
+ * @package    mod_uemsinfotutoria
  * @copyright  2026 UEMS Virtual
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_uems_info_tutoria\privacy;
+namespace mod_uemsinfotutoria\privacy;
 
 /**
  * The plugin does not store personal data of its own.
