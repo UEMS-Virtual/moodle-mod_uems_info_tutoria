@@ -503,25 +503,35 @@
 
 /* ═══════════════════════════════════════════
    Responsive — mobile pequeno (≤ 420px)
+   Padding externo zerado — Moodle já provê o
+   espaçamento lateral nos seus containers.
 ═══════════════════════════════════════════ */
 @media (max-width: 420px) {
     .mod-uems-info-tutoria .uit-switcher-shell {
-        border-radius: .5rem;
+        border-radius: 0;
+    }
+
+    .mod-uems-info-tutoria .uit-switcher-top {
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .mod-uems-info-tutoria .uit-student-side,
     .mod-uems-info-tutoria .uit-full-hero {
-        padding: .875rem;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .mod-uems-info-tutoria .uit-student-content,
     .mod-uems-info-tutoria .uit-full-content {
-        padding: .875rem;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .mod-uems-info-tutoria .uit-card,
     .mod-uems-info-tutoria .uit-full-panel {
         padding: .75rem;
+        border-radius: .5rem;
     }
 
     .mod-uems-info-tutoria .uit-person,
