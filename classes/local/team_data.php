@@ -183,9 +183,12 @@ class team_data {
             "SELECT DISTINCT ue.userid
                FROM {user_enrolments} ue
                JOIN {enrol} e ON e.id = ue.enrolid
+               JOIN {user}  u ON u.id = ue.userid
               WHERE e.courseid = :courseid
                 AND ue.userid $in_sql
                 AND ue.status = 0
+                AND u.suspended = 0
+                AND u.deleted   = 0
                 AND (ue.timestart = 0 OR ue.timestart <= :now1)
                 AND (ue.timeend   = 0 OR ue.timeend   >= :now2)",
             $params
