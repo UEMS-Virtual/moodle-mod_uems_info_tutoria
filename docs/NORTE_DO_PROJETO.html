@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Norte do Projeto — mod_uems_info_tutoria</title>
+  <style>
+    :root {
+      --uems:#006b5f;
+      --uems-dark:#06463f;
+      --ink:#152033;
+      --muted:#64748b;
+      --line:#dfe7ee;
+      --paper:#ffffff;
+      --bg:#f4f7fa;
+      --soft:#eef8f6;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:radial-gradient(circle at 10% 0%, #dcefeb 0, transparent 34%), var(--bg);
+      line-height:1.55;
+    }
+    main { max-width:1040px; margin:0 auto; padding:36px 20px; }
+    .hero {
+      background:linear-gradient(135deg,var(--uems),var(--uems-dark));
+      color:#fff;
+      border-radius:28px;
+      padding:38px;
+      box-shadow:0 22px 55px rgba(15,23,42,.12);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:after {
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      right:-110px;
+      top:-120px;
+      border:36px solid rgba(255,255,255,.08);
+    }
+    .kicker { font-size:12px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; opacity:.78; position:relative; z-index:1; }
+    h1 { margin:10px 0 0; font-size:38px; line-height:1.05; letter-spacing:-.04em; position:relative; z-index:1; }
+    .hero p { max-width:760px; opacity:.9; position:relative; z-index:1; }
+    section {
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:26px;
+      margin-top:22px;
+      box-shadow:0 8px 22px rgba(15,23,42,.04);
+    }
+    h2 {
+      color:var(--uems);
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin:0 0 18px;
+      padding-left:12px;
+      border-left:4px solid var(--uems);
+    }
+    h3 { margin:22px 0 8px; font-size:20px; }
+    ul { margin:8px 0 0; padding-left:22px; }
+    li { margin:5px 0; }
+    code {
+      background:var(--soft);
+      color:#24534d;
+      padding:2px 6px;
+      border-radius:6px;
+      font-size:.95em;
+    }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .card { background:#fbfdff; border:1px solid var(--line); border-radius:18px; padding:18px; }
+    .decision { border-left:4px solid var(--uems); padding-left:14px; margin:12px 0; }
+    .bad { background:#fff5f5; border-color:#ffd6d6; }
+    .bad strong { color:#a01818; }
+    .prototype { font-weight:700; color:var(--uems); }
+    .note-box { background:#f8fbfc; border:1px solid var(--line); border-radius:16px; padding:16px; }
+    @media (max-width:760px) {
+      main { padding:16px 12px; }
+      .hero { padding:26px; border-radius:20px; }
+      h1 { font-size:30px; }
+      section { padding:20px; border-radius:18px; }
+      .grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="kicker">mod_uems_info_tutoria</div>
+    <h1>Norte do Projeto</h1>
+    <p>Documento único de decisões do plugin Moodle de informações de tutoria e mediação pedagógica.</p>
+  </header>
+
+  <section>
+    <h2>Objetivo</h2>
+    <p>Exibir, dentro de uma disciplina Moodle, a equipe de tutoria e mediação pedagógica vinculada aos polos da sala.</p>
+    <p>O plugin não cadastra tutores. Ele apenas lê dados já existentes no Moodle.</p>
+  </section>
+
+  <section>
+    <h2>Tipo de plugin</h2>
+    <div class="decision">
+      <strong>Decisão:</strong> será um módulo de atividade Moodle (<code>mod</code>), não um bloco.
+    </div>
+    <p>Motivo: o conteúdo precisa aparecer como item da trilha/seção do curso. Um bloco ficaria limitado à lateral ou regiões do tema.</p>
+    <p>Mesmo sem guardar tutores, o módulo deve ter uma tabela mínima de instância, como é padrão em atividades Moodle.</p>
+  </section>
+
+  <section>
+    <h2>Fonte de dados</h2>
+    <ul>
+      <li>Usuários ativos do curso.</li>
+      <li>Papéis atribuídos no contexto do curso.</li>
+      <li>Grupos do curso.</li>
+      <li>Foto de perfil do Moodle.</li>
+    </ul>
+
+    <h3>Papéis considerados</h3>
+    <ul>
+      <li><code>mod_tutor</code> — Tutor Presencial.</li>
+      <li><code>mod_medpdg</code> — Mediador Pedagógico.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Regra dos polos</h2>
+    <p>Um grupo é considerado polo quando o nome contém a palavra <code>polo</code>, sem diferenciar maiúsculas/minúsculas.</p>
+    <p>Não haverá lista fixa nem cadastro manual de polos no plugin.</p>
+  </section>
+
+  <section>
+    <h2>Visualizações</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Estudante</h3>
+        <p>Referência visual principal: <span class="prototype">prototipos-visuais/variante-e-painel-contatos.html</span></p>
+        <p>Referência com alternância: <span class="prototype">prototipos-visuais/variante-g-aluno-alterna-visualizacao.html</span></p>
+        <ul>
+          <li>Abre por padrão na visão <strong>Meu polo</strong>.</li>
+          <li>Título lateral: <strong>Seu ponto de apoio</strong>.</li>
+          <li>Mostra Mediador(es) Pedagógico(s) do polo.</li>
+          <li>Mostra Tutor(es) Presencial(is) do polo.</li>
+          <li>Cada pessoa aparece com foto, nome e descrição curta.</li>
+          <li>Possui botão para alternar para a <strong>Lista completa</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Demais papéis</h3>
+        <p>Referência visual: <span class="prototype">prototipos-visuais/variante-a-quadros-simples.html</span></p>
+        <ul>
+          <li>Mostra a lista completa da sala.</li>
+          <li>Título principal: <strong>Equipe de tutoria e mediação pedagógica</strong>.</li>
+          <li>Seção de Mediadores Pedagógicos.</li>
+          <li>Seção de Tutores Presenciais.</li>
+          <li>Cada pessoa aparece com foto, nome, descrição curta e polos em texto.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Alternância do estudante</h2>
+    <div class="decision">
+      <strong>Decisão:</strong> estudante deve abrir na visualização do próprio polo, mas pode alternar para a lista completa.
+    </div>
+    <p>A alternância usa JavaScript e deve seguir a referência <span class="prototype">prototipos-visuais/variante-g-aluno-alterna-visualizacao.html</span>.</p>
+    <p>Para evitar espaço branco, flickering ou salto brusco:</p>
+    <ul>
+      <li>não reservar a altura máxima entre as visualizações;</li>
+      <li>em repouso, apenas a visualização ativa participa do fluxo normal;</li>
+      <li>ao alternar, medir a altura atual e a altura da próxima visualização;</li>
+      <li>animar a altura do container entre esses dois valores;</li>
+      <li>ao final da transição, voltar a altura do container para <code>auto</code>.</li>
+    </ul>
+    <p>Se o JavaScript não estiver disponível, a visualização padrão do estudante deve continuar sendo <strong>Meu polo</strong>.</p>
+  </section>
+
+  <section>
+    <h2>Pluralização</h2>
+    <p>Na visão do estudante, o título da função muda conforme a quantidade de pessoas encontradas no polo.</p>
+    <ul>
+      <li>1 pessoa: <strong>Mediador Pedagógico</strong> / <strong>Tutor Presencial</strong>.</li>
+      <li>2 ou mais pessoas: <strong>Mediadores Pedagógicos</strong> / <strong>Tutores Presenciais</strong>.</li>
+    </ul>
+    <p>Quando houver mais de uma pessoa na mesma função, todas aparecem no mesmo card da função.</p>
+  </section>
+
+  <section>
+    <h2>Polos na interface</h2>
+    <div class="card bad">
+      <strong>Regra visual:</strong> polos em pills/badges estão banidos.
+    </div>
+    <p>Polos devem aparecer como texto simples, com rótulo discreto quando necessário.</p>
+  </section>
+
+  <section>
+    <h2>Cores e tema Moodle</h2>
+    <div class="decision">
+      <strong>Decisão:</strong> as cores finais devem seguir o tema Moodle ativo.
+    </div>
+    <p>Os protótipos usam verde institucional apenas como referência visual. Na implementação, preferir variáveis CSS do tema Moodle/Boost e evitar cores fixas sempre que possível.</p>
+    <p>Exemplos de intenção:</p>
+    <ul>
+      <li>cor principal: variável de cor primária do tema;</li>
+      <li>bordas e fundos suaves: variáveis neutras do tema;</li>
+      <li>texto: cores padrão do tema;</li>
+      <li>CSS sempre escopado em <code>.mod-uems-info-tutoria</code>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Links para conversa</h2>
+    <div class="decision">
+      <strong>Decisão:</strong> o nome de cada tutor/mediador deve ser um link para iniciar conversa no Moodle.
+    </div>
+    <p>Ao clicar no nome, o usuário deve ser levado ao recurso padrão de mensagem/chat do Moodle para conversar com aquela pessoa, respeitando as APIs e permissões nativas do Moodle.</p>
+    <p>A foto permanece apenas visual; o link principal fica no nome da pessoa.</p>
+    <p>Exemplo para mediador:</p>
+    <p><strong>Polos atendidos</strong><br>Bataguassu, Paranhos e Água Clara</p>
+    <p>Exemplo para tutor presencial:</p>
+    <p><strong>Polo</strong><br>Bataguassu</p>
+  </section>
+
+  <section>
+    <h2>Banco de dados</h2>
+    <p>Não armazenar tutores, polos ou grupos em tabela própria.</p>
+    <p>A tabela do plugin deve existir apenas para representar a instância da atividade no Moodle.</p>
+    <ul>
+      <li><code>id</code></li>
+      <li><code>course</code></li>
+      <li><code>name</code></li>
+      <li><code>intro</code></li>
+      <li><code>introformat</code></li>
+      <li><code>timecreated</code></li>
+      <li><code>timemodified</code></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Fora do escopo</h2>
+    <ul>
+      <li>Cadastro manual de tutores.</li>
+      <li>Cadastro manual de polos.</li>
+      <li>Edição de dados de usuário.</li>
+      <li>Armazenamento próprio de lista de tutores.</li>
+      <li>Permissões sofisticadas.</li>
+      <li>JavaScript obrigatório para a visualização básica.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Ajustes visuais aprendidos nos protótipos</h2>
+    <div class="note-box">
+      <h3>Alternância sem espaço morto</h3>
+      <p>Na visualização do estudante, a lista completa é mais alta que a visão do próprio polo. Não se deve reservar a altura da maior visualização, pois isso cria um grande espaço branco na visão menor.</p>
+      <p>Solução: manter apenas a view ativa no fluxo normal; durante a troca, medir alturas, animar o container e retornar para <code>height: auto</code>.</p>
+    </div>
+
+    <div class="note-box" style="margin-top:14px;">
+      <h3>Nomes longos</h3>
+      <p>Com sobrenomes grandes, a coluna do nome não pode ser estreita demais em desktop.</p>
+      <p>Solução adotada nos protótipos A e G: usar uma coluna central elástica, por exemplo <code>minmax(380px, 1fr)</code>, e reservar uma largura estável para a coluna dos polos.</p>
+    </div>
+
+    <div class="note-box" style="margin-top:14px;">
+      <h3>Polos sem pills</h3>
+      <p>Polos em pills/badges deixaram a interface pesada e foram banidos. Polos devem aparecer como texto, com rótulo discreto.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Responsividade</h2>
+    <h3>Estudante</h3>
+    <ul>
+      <li>O painel lateral vira cabeçalho superior no mobile.</li>
+      <li>O polo continua destacado no cabeçalho.</li>
+      <li>Os cards das funções ficam empilhados.</li>
+    </ul>
+
+    <h3>Demais papéis</h3>
+    <ul>
+      <li>A lista completa vira lista vertical compacta.</li>
+      <li>Foto e nome ficam em destaque.</li>
+      <li>Polos aparecem abaixo dos dados da pessoa.</li>
+      <li>Não deve haver rolagem horizontal.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Critérios de aceite</h2>
+    <ul>
+      <li>Plugin instala no Moodle 4.5.</li>
+      <li>Professor consegue adicionar a atividade ao curso.</li>
+      <li>Usuários ativos com papel <code>mod_tutor</code> aparecem como Tutor Presencial.</li>
+      <li>Usuários ativos com papel <code>mod_medpdg</code> aparecem como Mediador Pedagógico.</li>
+      <li>O polo é identificado por grupo cujo nome contém <code>polo</code>.</li>
+      <li>Estudante abre vendo a equipe do próprio polo.</li>
+      <li>Estudante pode alternar para a lista completa.</li>      <li>Usuário que não é estudante vê a lista completa da sala.</li>
+      <li>Pessoas aparecem com foto de perfil, nome com link para conversa e descrição curta.</li>
+      <li>Polos não aparecem como pills/badges.</li>
+      <li>Cores seguem variáveis do tema Moodle ativo.</li>
+      <li>Quando não houver pessoa para uma função, aparece mensagem simples.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

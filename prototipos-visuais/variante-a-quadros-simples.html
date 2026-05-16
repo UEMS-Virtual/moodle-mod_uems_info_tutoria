@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protótipo A — Lista completa institucional</title>
+  <style>
+    :root {
+      --uems:#006b5f;
+      --uems-dark:#06463f;
+      --uems-soft:#e7f4f1;
+      --ink:#152033;
+      --muted:#64748b;
+      --line:#dfe7ee;
+      --paper:#ffffff;
+      --bg:#f4f7fa;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      padding:36px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at 10% 0%, #dcefeb 0, transparent 34%), var(--bg);
+      color:var(--ink);
+    }
+    .course-page { max-width:1080px; margin:0 auto; }
+    .nav { margin-bottom:16px; font-size:14px; color:var(--muted); }
+    .nav a { color:var(--uems); font-weight:700; margin-left:10px; }
+
+    .activity {
+      background:var(--paper);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:0 22px 55px rgba(15,23,42,.12);
+      border:1px solid rgba(15,23,42,.06);
+    }
+
+    .hero {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.08), transparent 38%),
+        linear-gradient(135deg, var(--uems), var(--uems-dark));
+      color:#fff;
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before {
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      right:-110px;
+      top:-120px;
+      border:36px solid rgba(255,255,255,.08);
+    }
+    .kicker {
+      position:relative;
+      z-index:1;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      opacity:.78;
+    }
+    h1 {
+      position:relative;
+      z-index:1;
+      margin:10px 0 0;
+      font-size:34px;
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+    .intro {
+      position:relative;
+      z-index:1;
+      margin:12px 0 0;
+      opacity:.88;
+      max-width:760px;
+      line-height:1.5;
+    }
+
+    .content {
+      padding:30px 34px 36px;
+      display:grid;
+      gap:24px;
+    }
+    .panel {
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      background:linear-gradient(180deg,#fff,#fbfdff);
+      box-shadow:0 8px 22px rgba(15,23,42,.04);
+    }
+    .panel-title {
+      color:var(--uems);
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      margin:0 0 20px;
+      padding-left:12px;
+      border-left:4px solid var(--uems);
+    }
+    .people-list {
+      display:grid;
+      gap:18px;
+    }
+    .person-item {
+      display:grid;
+      /* Desktop: nomes longos quebravam cedo com coluna fixa pequena.
+         A coluna central fica elástica e a coluna de polos mantém largura estável. */
+      grid-template-columns:72px minmax(380px, 1fr) 190px;
+      gap:18px;
+      align-items:center;
+      padding-bottom:18px;
+      border-bottom:1px solid #eef2f6;
+    }
+    .person-item:last-child {
+      padding-bottom:0;
+      border-bottom:0;
+    }
+    .person-photo {
+      width:72px;
+      height:72px;
+      border-radius:20px;
+      object-fit:cover;
+      border:1px solid #d8e6e3;
+      background:#eef8f6;
+    }
+    .person-name {
+      font-size:22px;
+      line-height:1.15;
+      font-weight:900;
+      margin-bottom:5px;
+    }
+    .note {
+      color:var(--muted);
+      line-height:1.35;
+      font-size:14px;
+    }
+    .polos {
+      /* Decisão visual: polos em pills/badges foram banidos.
+         Aqui eles aparecem como texto editorial com rótulo discreto. */
+      color:#24534d;
+      font-size:14px;
+      line-height:1.45;
+      text-align:right;
+      font-weight:700;
+    }
+    .polos-label {
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:4px;
+    }
+
+    @media (max-width: 820px) {
+      body { padding:12px; background:#f8fafc; }
+      .nav { font-size:13px; line-height:1.8; }
+      .activity { border-radius:18px; }
+      .hero { padding:24px; }
+      h1 { font-size:29px; }
+      .intro { font-size:14px; }
+      .content { padding:22px; gap:18px; }
+      .panel { padding:16px; border-radius:18px; }
+      .panel-title { font-size:12px; margin-bottom:16px; }
+      /* Mobile: a lista vira duas colunas simples; os polos descem abaixo do nome. */
+      .person-item { grid-template-columns:56px 1fr; gap:13px; align-items:start; }
+      .person-photo { width:56px; height:56px; border-radius:16px; }
+      .person-name { font-size:19px; }
+      .note { font-size:13px; }
+      .polos { grid-column:2; text-align:left; font-size:13px; }
+    }
+
+    @media (max-width: 420px) {
+      .person-item { grid-template-columns:48px 1fr; gap:12px; }
+      .person-photo { width:48px; height:48px; border-radius:14px; }
+      .polos { grid-column:1 / -1; padding-left:60px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="course-page">
+    <nav class="nav"><strong>Protótipos:</strong><a href="variante-a-quadros-simples.html">A</a><a href="variante-b-polos-em-destaque.html">B</a><a href="variante-c-lista-institucional.html">C</a></nav>
+
+    <section class="activity mod-uems-info-tutoria">
+      <header class="hero">
+        <div class="kicker">Informações de tutoria</div>
+        <h1>Equipe de tutoria e mediação pedagógica</h1>
+        <p class="intro">Relação da mediação pedagógica e da tutoria vinculadas aos polos da disciplina.</p>
+      </header>
+
+      <div class="content">
+        <section class="panel">
+          <h2 class="panel-title">Mediadores Pedagógicos</h2>
+          <div class="people-list">
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=47" alt="Foto de Ana Paula Ribeiro de Albuquerque Ferreira">
+              <div>
+                <div class="person-name">Ana Paula Ribeiro de Albuquerque Ferreira</div>
+                <div class="note">Atende múltiplos polos.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polos atendidos</span>
+                Bataguassu, Paranhos e Água Clara
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=12" alt="Foto de Carlos Henrique Mendes de Oliveira Campos">
+              <div>
+                <div class="person-name">Carlos Henrique Mendes de Oliveira Campos</div>
+                <div class="note">Atende múltiplos polos.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polos atendidos</span>
+                Dourados, Bela Vista e Japorã
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=25" alt="Foto de Renata Costa Vasconcelos de Almeida Prado">
+              <div>
+                <div class="person-name">Renata Costa Vasconcelos de Almeida Prado</div>
+                <div class="note">Atende múltiplos polos.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polos atendidos</span>
+                Rio Brilhante, Miranda e Porto Murtinho
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Tutores Presenciais</h2>
+          <div class="people-list">
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=32" alt="Foto de Maria Fernandes dos Santos Albuquerque">
+              <div>
+                <div class="person-name">Maria Fernandes dos Santos Albuquerque</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Bataguassu
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=59" alt="Foto de João Batista Pereira de Souza Neto">
+              <div>
+                <div class="person-name">João Batista Pereira de Souza Neto</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Paranhos
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=5" alt="Foto de Luciana Alves Montenegro Cavalcante">
+              <div>
+                <div class="person-name">Luciana Alves Montenegro Cavalcante</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Dourados
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=21" alt="Foto de Patrícia Gomes de Figueiredo Azevedo">
+              <div>
+                <div class="person-name">Patrícia Gomes de Figueiredo Azevedo</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Água Clara
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=14" alt="Foto de Eduardo Lima Barreto de Carvalho Filho">
+              <div>
+                <div class="person-name">Eduardo Lima Barreto de Carvalho Filho</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Bela Vista
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=49" alt="Foto de Fernanda Rocha Nascimento de Moraes">
+              <div>
+                <div class="person-name">Fernanda Rocha Nascimento de Moraes</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Rio Brilhante
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=8" alt="Foto de Marcelo Nunes da Silva Guimarães">
+              <div>
+                <div class="person-name">Marcelo Nunes da Silva Guimarães</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Miranda
+              </div>
+            </article>
+
+            <article class="person-item">
+              <img class="person-photo" src="https://i.pravatar.cc/128?img=44" alt="Foto de Simone Oliveira Martins de Albuquerque">
+              <div>
+                <div class="person-name">Simone Oliveira Martins de Albuquerque</div>
+                <div class="note">Referência presencial do polo.</div>
+              </div>
+              <div class="polos">
+                <span class="polos-label">Polo</span>
+                Porto Murtinho
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
