@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_uemsinfotutoria';
-$plugin->version = 2026051603;
+$plugin->version = 2026051604;
 $plugin->requires = 2024100700;
 $plugin->supported = [405, 405];
-$plugin->maturity = MATURITY_ALPHA;
-$plugin->release = '0.1.0';
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = '1.0.0';
