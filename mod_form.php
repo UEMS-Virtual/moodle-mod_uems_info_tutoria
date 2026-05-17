@@ -42,9 +42,34 @@ class mod_uemsinfotutoria_mod_form extends moodleform_mod {
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->setDefault('name', get_string('modulename', 'uemsinfotutoria'));
+        $mform->setDefault('name', get_string('defaultname', 'uemsinfotutoria'));
 
         $this->standard_intro_elements();
+        $mform->setDefault('introeditor', [
+            'text' => get_string('defaultintro', 'uemsinfotutoria'),
+            'format' => FORMAT_HTML,
+        ]);
+
+        $mform->addElement('header', 'uemsinfotutoriasettings', get_string('pluginname', 'uemsinfotutoria'));
+
+        $mform->addElement('text', 'supporttitle', get_string('supporttitle', 'uemsinfotutoria'), ['size' => '64']);
+        $mform->setType('supporttitle', PARAM_TEXT);
+        $mform->addRule('supporttitle', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+        $mform->setDefault('supporttitle', get_string('seuponto', 'uemsinfotutoria'));
+
+        $expectoptions = [
+            0 => get_string('expect:auto', 'uemsinfotutoria'),
+            1 => get_string('yes'),
+            2 => get_string('no'),
+        ];
+
+        $mform->addElement('select', 'expecttutor', get_string('expecttutor', 'uemsinfotutoria'), $expectoptions);
+        $mform->setDefault('expecttutor', 0);
+        $mform->addHelpButton('expecttutor', 'expecttutor', 'uemsinfotutoria');
+
+        $mform->addElement('select', 'expectmediator', get_string('expectmediator', 'uemsinfotutoria'), $expectoptions);
+        $mform->setDefault('expectmediator', 0);
+        $mform->addHelpButton('expectmediator', 'expectmediator', 'uemsinfotutoria');
 
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();

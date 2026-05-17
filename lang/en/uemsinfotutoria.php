@@ -24,6 +24,8 @@
 
 $string['modulename'] = 'Tutoring information';
 $string['modulename_help'] = 'The Tutoring information activity displays course tutoring and pedagogical mediation information by polo.';
+$string['defaultname'] = 'Tutoring and pedagogical mediation team';
+$string['defaultintro'] = 'Pedagogical mediation and tutoring team assigned to the course polos.';
 $string['modulenameplural'] = 'Tutoring information';
 $string['pluginadministration'] = 'Tutoring information administration';
 $string['pluginname'] = 'Tutoring information';
@@ -32,13 +34,18 @@ $string['uemsinfotutoria:addinstance'] = 'Add a new Tutoring information activit
 $string['uemsinfotutoria:view'] = 'View Tutoring information activity';
 
 // Interface — labels and titles.
-$string['informacoestutoria']   = 'Tutoring information';
 $string['equipetutoria']        = 'Tutoring and pedagogical mediation team';
 $string['seuponto']             = 'Your support point';
 $string['seupolo']              = 'Your polo';
 $string['meupolo']              = 'My polo';
 $string['listacompleta']        = 'Full list';
 $string['alternarvisualizacao'] = 'Switch view';
+$string['supporttitle'] = 'Student panel title';
+$string['expect:auto'] = 'Automatic';
+$string['expecttutor'] = 'On-site Tutor expected';
+$string['expecttutor_help'] = 'In automatic mode, the On-site Tutor is expected.';
+$string['expectmediator'] = 'Pedagogical Mediator expected';
+$string['expectmediator_help'] = 'In automatic mode, the Pedagogical Mediator is not expected in reoffer courses identified by REO/REO2 in the shortname. In all other cases, it is expected.';
 
 // Role labels.
 $string['mediadorpedagogico']    = 'Pedagogical Mediator';
@@ -57,6 +64,12 @@ $string['introfull'] = 'Pedagogical mediation and tutoring team assigned to the 
 // Empty states.
 $string['sempessoa']           = 'No person found for this role.';
 $string['sempoloidentificado'] = 'Polo not identified';
+$string['tutornotinformedcourse'] = 'On-site Tutor not informed for the course.';
+$string['mediatornotinformedcourse'] = 'Pedagogical Mediator not informed for the course.';
+$string['tutornotinformedpolo'] = 'On-site Tutor not informed for your polo.';
+$string['mediatornotinformedpolo'] = 'Pedagogical Mediator not informed for your polo.';
+$string['nofunctionsexpected'] = 'No tutoring role is configured for display in this activity.';
+$string['nopolohelp'] = 'Use the Full list to consult the course team.';
 
 // Accessibility.
 $string['fotode'] = 'Photo of {$a}';

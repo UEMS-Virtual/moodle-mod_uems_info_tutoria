@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Norte do Projeto — mod_uems_info_tutoria</title>
+  <title>Norte do Projeto — mod_uemsinfotutoria</title>
   <style>
     :root {
       --uems:#006b5f;
@@ -93,7 +93,7 @@
 <body>
 <main>
   <header class="hero">
-    <div class="kicker">mod_uems_info_tutoria</div>
+    <div class="kicker">mod_uemsinfotutoria</div>
     <h1>Norte do Projeto</h1>
     <p>Documento único de decisões do plugin Moodle de informações de tutoria e mediação pedagógica.</p>
   </header>
@@ -111,6 +111,87 @@
     </div>
     <p>Motivo: o conteúdo precisa aparecer como item da trilha/seção do curso. Um bloco ficaria limitado à lateral ou regiões do tema.</p>
     <p>Mesmo sem guardar tutores, o módulo deve ter uma tabela mínima de instância, como é padrão em atividades Moodle.</p>
+  </section>
+
+  <section>
+    <h2>Decisões de arquitetura Moodle</h2>
+    <p>Esta seção registra decisões tomadas a partir da revisão do plugin contra as convenções oficiais de desenvolvimento Moodle.</p>
+
+    <h3>Por que é <code>mod</code>, mesmo sendo informativo?</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> manter como módulo de atividade Moodle (<code>mod_uemsinfotutoria</code>).
+    </div>
+    <p>A escolha por <code>mod</code> é consciente. No formato de curso usado pela instituição, a trilha de aprendizagem apresenta os itens de forma sequencial no corpo do curso. As informações de tutoria precisam aparecer no meio desse conteúdo, no ponto exato da trilha em que o estudante deve lê-las.</p>
+    <p>Um bloco lateral ou painel fora da sequência poderia prejudicar a experiência do usuário, pois tiraria essas informações do fluxo principal de leitura do curso.</p>
+    <p>Consequência: embora o plugin não cadastre tutores, mediadores ou polos, ele continua precisando de uma tabela mínima de instância, como qualquer atividade Moodle.</p>
+
+    <h3>Comportamento de exibição</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> o módulo deve funcionar como conteúdo inline, no estilo Label, sem exigir clique do estudante.
+    </div>
+    <p>A informação precisa estar visível diretamente na página do curso. O objetivo do plugin é reduzir atrito de navegação no Moodle e evitar que o estudante precise entrar em outra página para encontrar contatos essenciais de tutoria e mediação.</p>
+    <p>Como a navegação do Moodle pode ser percebida como complexa por estudantes que precisam de poucas informações objetivas, o plugin deve colocar a informação “na cara” do usuário, dentro da trilha do curso.</p>
+    <p>Consequência: a página própria <code>view.php</code>, se existir por compatibilidade com o tipo <code>mod</code>, não deve ser o caminho principal de uso. A experiência principal é a renderização inline no curso.</p>
+    <div class="decision">
+      <strong>Decisão:</strong> manter o <code>view.php</code> apenas como fallback técnico simples.
+    </div>
+    <p>Como o objetivo é evitar cliques e páginas intermediárias, a URL técnica da atividade não deve receber complexidade extra. O plugin deve priorizar a renderização inline na página do curso. Não é necessário implementar lógica sofisticada de redirecionamento, âncora ou experiência alternativa para acesso direto.</p>
+    <p>Mesmo assim, por convenção de módulos Moodle, o <code>view.php</code> pode continuar existindo para resolver acessos diretos ou fluxos administrativos inesperados, desde que não marque conclusão, não registre evento de visualização e não seja tratado como fluxo principal do estudante.</p>
+
+    <h3>Conclusão e visualização</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> o plugin não precisa marcar conclusão nem visualização para o estudante.
+    </div>
+    <p>A atividade existe para exposição direta de informação essencial, não para compor progresso, nota, participação ou rastreamento de leitura.</p>
+    <p>Consequência: não é necessário usar conclusão por visualização, nem tratar o acesso ao conteúdo como evento pedagógico relevante. A experiência principal continua sendo a leitura inline na página do curso.</p>
+
+    <h3>Logs e evento de visualização</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> não é necessário registrar evento de visualização nos logs/relatórios do Moodle.
+    </div>
+    <p>Como o objetivo é apenas expor contatos e informações de apoio, não há necessidade institucional de rastrear que o estudante visualizou o bloco informativo.</p>
+    <p>Consequência: o plugin não precisa implementar evento <code>course_module_viewed</code> para esta finalidade.</p>
+
+    <h3>Cache e custo de consulta</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> não usar cache específico nesta fase.
+    </div>
+    <p>O volume esperado de dados é pequeno, com no máximo cerca de 10 tutores/mediadores por sala. As consultas a usuários, papéis, grupos e matrículas devem ter impacto baixo nesse cenário.</p>
+    <p>Evitar cache também simplifica a manutenção e garante que alterações feitas no Moodle — como troca de tutor, mudança de grupo/polo ou suspensão de matrícula — apareçam imediatamente na página do curso.</p>
+    <p>Se futuramente houver cursos com grande número de polos, muitos usuários ou múltiplas instâncias do plugin na mesma página, esta decisão deve ser reavaliada.</p>
+
+    <h3>Papéis institucionais</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> manter os papéis hardcoded nesta fase.
+    </div>
+    <p>O plugin assume, por convenção institucional, os seguintes shortnames de papéis Moodle:</p>
+    <ul>
+      <li><code>mod_tutor</code> — Tutor Presencial.</li>
+      <li><code>mod_medpdg</code> — Mediador Pedagógico.</li>
+    </ul>
+    <p>Não haverá tela de configuração para selecionar papéis neste momento. Esta escolha reduz complexidade e atende ao cenário controlado da instituição.</p>
+    <p>Se o plugin for usado em ambientes com nomes de papéis diferentes, ou se houver necessidade de manutenção por administradores sem acesso ao código, esta decisão deve ser reavaliada.</p>
+
+    <h3>Identificação de polos</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> manter fixa a regra de identificação de polos por nome de grupo.
+    </div>
+    <p>Um grupo do curso é considerado polo quando seu nome contém a palavra <code>polo</code>, sem diferenciar maiúsculas/minúsculas.</p>
+    <p>Esta é uma convenção estável no modelo atual de gestão dos cursos. Se a forma institucional de organizar cursos, polos, grupos ou papéis mudar, o plugin deverá ser revisto de maneira mais ampla, não apenas receber uma configuração pontual.</p>
+
+    <h3>Visibilidade no curso</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> o plugin será usado em área aberta e visível do curso.
+    </div>
+    <p>No uso previsto, a atividade sempre estará posicionada em uma área visível e acessível aos estudantes. O objetivo é justamente expor a informação sem atrito.</p>
+    <p>Mesmo assim, por alinhamento às convenções do Moodle, a implementação pode manter verificações defensivas simples de visibilidade/permissão antes de renderizar conteúdo inline, desde que isso não altere a experiência esperada em cursos corretamente configurados.</p>
+
+    <h3>Schema da instância</h3>
+    <div class="decision">
+      <strong>Decisão:</strong> manter a coluna <code>course</code> indexada, sem adicionar chave estrangeira explícita neste momento.
+    </div>
+    <p>A tabela da atividade guarda apenas a instância mínima do módulo e configurações de exibição. O índice em <code>course</code> é suficiente para o uso atual e segue um padrão encontrado em módulos simples do Moodle core.</p>
+    <p>Adicionar uma chave estrangeira explícita agora teria pouco valor prático, não altera a experiência do usuário e exigiria cuidado extra de upgrade/schema. Esta decisão pode ser reavaliada se houver uma mudança estrutural maior no banco da atividade.</p>
   </section>
 
   <section>

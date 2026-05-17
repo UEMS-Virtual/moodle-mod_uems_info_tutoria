@@ -39,6 +39,15 @@ class team_data {
     /** Role shortname for on-site tutors. */
     const ROLE_TUTOR = 'mod_tutor';
 
+    /** Expectation mode: resolve from course context. */
+    const EXPECT_AUTO = 0;
+
+    /** Expectation mode: function is expected. */
+    const EXPECT_YES = 1;
+
+    /** Expectation mode: function is not expected. */
+    const EXPECT_NO = 2;
+
     /**
      * Return the full team for a course, grouped by role.
      *
@@ -132,11 +141,14 @@ class team_data {
             return [];
         }
 
+        $userfields = \core_user\fields::for_userpic()->with_name()->including('email');
+        $usersql = $userfields->get_sql('u', false, '', '', false);
+
         $role_users = \get_role_users(
             $role->id,
             $coursecontext,
             false,
-            'u.id, u.firstname, u.lastname, u.description, u.picture, u.imagealt, u.email',
+            $usersql->selects,
             'u.lastname, u.firstname'
         );
 
@@ -209,6 +221,63 @@ class team_data {
      */
     public static function is_student(int $userid, \context_course $coursecontext): bool {
         return !\has_capability('moodle/course:manageactivities', $coursecontext, $userid);
+    }
+
+    /**
+     * Return true when the user can manage course activities.
+     *
+     * @param int             $userid
+     * @param \context_course $coursecontext
+     * @return bool
+     */
+    public static function can_manage_activities(int $userid, \context_course $coursecontext): bool {
+        return \has_capability('moodle/course:manageactivities', $coursecontext, $userid);
+    }
+
+    /**
+     * Resolve whether on-site tutors are expected for this instance/course.
+     *
+     * @param object $instance Activity instance.
+     * @param object $course Course record.
+     * @return bool
+     */
+    public static function expects_tutors(object $instance, object $course): bool {
+        $mode = isset($instance->expecttutor) ? (int) $instance->expecttutor : self::EXPECT_AUTO;
+        if ($mode === self::EXPECT_YES) {
+            return true;
+        }
+        if ($mode === self::EXPECT_NO) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Resolve whether pedagogical mediators are expected for this instance/course.
+     *
+     * @param object $instance Activity instance.
+     * @param object $course Course record.
+     * @return bool
+     */
+    public static function expects_mediators(object $instance, object $course): bool {
+        $mode = isset($instance->expectmediator) ? (int) $instance->expectmediator : self::EXPECT_AUTO;
+        if ($mode === self::EXPECT_YES) {
+            return true;
+        }
+        if ($mode === self::EXPECT_NO) {
+            return false;
+        }
+        return !self::is_reoffer_course($course->shortname ?? '');
+    }
+
+    /**
+     * Return true if the course shortname contains an isolated REO/REO2 marker.
+     *
+     * @param string $shortname Course shortname.
+     * @return bool
+     */
+    public static function is_reoffer_course(string $shortname): bool {
+        return preg_match('/(?:^|[^A-Za-z0-9])REO2?(?:$|[^A-Za-z0-9])/i', $shortname) === 1;
     }
 
     /**

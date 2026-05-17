@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Behat no Projeto — mod_uemsinfotutoria</title>
+  <style>
+    :root {
+      --primary: #006b5f;
+      --primary-dark: #06463f;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #dfe7ee;
+      --paper: #ffffff;
+      --bg: #f4f7fa;
+      --soft: #eef8f6;
+      --warn: #fff7ed;
+      --warn-line: #fed7aa;
+      --ok: #ecfdf5;
+      --ok-line: #a7f3d0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    main { max-width: 1040px; margin: 0 auto; padding: 36px 20px; }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, .12);
+    }
+    .kicker {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      opacity: .8;
+    }
+    h1 { margin: 10px 0 0; font-size: 38px; line-height: 1.08; letter-spacing: -.04em; }
+    header p { max-width: 760px; opacity: .92; }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 26px;
+      margin-top: 22px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
+    }
+    h2 {
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+      padding-left: 12px;
+      border-left: 4px solid var(--primary);
+    }
+    h3 { margin: 22px 0 8px; font-size: 20px; }
+    code {
+      background: var(--soft);
+      color: #24534d;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: .95em;
+    }
+    pre {
+      overflow: auto;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 14px;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    ul { padding-left: 22px; }
+    li { margin: 6px 0; }
+    .note, .ok, .warn {
+      border-radius: 16px;
+      padding: 16px;
+      margin: 14px 0;
+      border: 1px solid var(--line);
+      background: #f8fbfc;
+    }
+    .ok { background: var(--ok); border-color: var(--ok-line); }
+    .warn { background: var(--warn); border-color: var(--warn-line); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #fbfdff; border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+    .muted { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 10px; vertical-align: top; }
+    th { color: var(--primary-dark); }
+    @media (max-width: 760px) {
+      main { padding: 16px 12px; }
+      header { padding: 26px; border-radius: 20px; }
+      h1 { font-size: 30px; }
+      section { padding: 20px; border-radius: 18px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="kicker">mod_uemsinfotutoria</div>
+    <h1>Behat no Projeto</h1>
+    <p>Uma explicação didática do que é Behat, por que ele existe no Moodle e como ele foi usado para validar o plugin de Informações de Tutoria.</p>
+  </header>
+
+  <section>
+    <h2>Resumo rápido</h2>
+    <p><strong>Behat</strong> é uma ferramenta de teste automatizado que simula uma pessoa usando o Moodle pelo navegador.</p>
+    <p>Enquanto um teste PHPUnit verifica regras internas do código, o Behat verifica fluxos de uso reais:</p>
+    <ul>
+      <li>entrar como estudante;</li>
+      <li>abrir a página da disciplina;</li>
+      <li>ver se os contatos aparecem;</li>
+      <li>entrar como professor;</li>
+      <li>adicionar a atividade pelo seletor de atividades;</li>
+      <li>confirmar que a interface aparece como esperado.</li>
+    </ul>
+    <div class="ok">
+      <strong>Ideia principal:</strong> Behat responde à pergunta: “um usuário real consegue fazer isso no Moodle?”
+    </div>
+  </section>
+
+  <section>
+    <h2>Behat em palavras simples</h2>
+    <p>O Behat lê arquivos escritos em uma linguagem quase natural, chamada <strong>Gherkin</strong>. Esses arquivos têm frases como:</p>
+    <pre><code>Given I am on the "Course 1" course page logged in as "student1"
+Then I should see "Your support point"
+And I should see "Polo Bataguassu"</code></pre>
+    <p>Essas frases não são só documentação. O Moodle tem vários “passos” prontos que transformam essas frases em ações reais no navegador.</p>
+    <p>Então, quando o teste roda, ele realmente abre o Moodle, cria dados de teste, faz login, navega e confere textos na tela.</p>
+  </section>
+
+  <section>
+    <h2>Diferença entre PHPUnit e Behat</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ferramenta</th>
+          <th>Verifica</th>
+          <th>Exemplo neste projeto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PHPUnit</strong></td>
+          <td>Regras internas do PHP, funções, serviços e dados.</td>
+          <td>“Se o shortname contém REO, Mediador Pedagógico não é esperado no modo automático.”</td>
+        </tr>
+        <tr>
+          <td><strong>Behat</strong></td>
+          <td>Fluxos reais de usuário no Moodle pelo navegador.</td>
+          <td>“O estudante abre a disciplina e vê o Tutor Presencial e o Mediador Pedagógico do próprio Polo.”</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>Analogia:</strong> PHPUnit testa o motor por dentro. Behat dirige o carro pela rua para ver se ele funciona para quem usa.
+    </div>
+  </section>
+
+  <section>
+    <h2>Por que usamos Behat neste plugin?</h2>
+    <p>Este plugin tem uma decisão importante de UX: a informação deve aparecer <strong>direto na página da disciplina</strong>, sem clique, como conteúdo inline.</p>
+    <p>Isso é algo que vale testar pelo navegador, porque envolve o Moodle inteiro:</p>
+    <ul>
+      <li>curso/disciplina;</li>
+      <li>usuários;</li>
+      <li>papéis;</li>
+      <li>grupos/polos;</li>
+      <li>atividade Moodle;</li>
+      <li>renderização inline na página do curso;</li>
+      <li>activity chooser;</li>
+      <li>visão do estudante e visão do professor.</li>
+    </ul>
+    <p>PHPUnit consegue testar as regras internas, mas Behat garante que o fluxo integrado do Moodle continua funcionando.</p>
+  </section>
+
+  <section>
+    <h2>Arquivo criado no projeto</h2>
+    <p>O teste Behat do plugin está em:</p>
+    <pre><code>tests/behat/inline_display.feature</code></pre>
+    <p>Esse arquivo descreve três cenários principais:</p>
+    <ol>
+      <li>Estudante vê os contatos do próprio Polo inline na página da disciplina.</li>
+      <li>Professor vê a lista completa inline na página da disciplina.</li>
+      <li>Professor consegue adicionar a atividade pelo seletor de atividades do Moodle.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Como o teste prepara os dados</h2>
+    <p>Antes dos cenários, o Behat cria um mundo de teste temporário. Ele cria:</p>
+    <ul>
+      <li>uma disciplina chamada <code>Course 1</code>;</li>
+      <li>um estudante;</li>
+      <li>um professor;</li>
+      <li>um Tutor Presencial;</li>
+      <li>um Mediador Pedagógico;</li>
+      <li>os papéis institucionais <code>mod_tutor</code> e <code>mod_medpdg</code>;</li>
+      <li>um grupo chamado <code>Polo Bataguassu</code>;</li>
+      <li>os membros desse grupo;</li>
+      <li>uma instância da atividade <code>uemsinfotutoria</code>.</li>
+    </ul>
+    <p>Isso significa que o teste não depende de dados manuais existentes no Moodle. Ele monta tudo que precisa, roda, e depois o ambiente de teste é limpo pelo Moodle.</p>
+  </section>
+
+  <section>
+    <h2>Exemplo do cenário do estudante</h2>
+    <pre><code>Scenario: Student sees their polo contacts inline in the course page
+  When I am on the "Course 1" course page logged in as "student1"
+  Then I should see "Your support point"
+  And I should see "Polo Bataguassu"
+  And I should see "Ana Tutora"
+  And I should see "Maria Mediadora"
+  And I should see "My polo"
+  And I should see "Full list"</code></pre>
+    <p>Esse cenário confirma o fluxo central do plugin:</p>
+    <ul>
+      <li>o estudante entra direto na disciplina;</li>
+      <li>não precisa clicar na atividade;</li>
+      <li>o plugin aparece inline;</li>
+      <li>o Polo é identificado;</li>
+      <li>Tutor Presencial e Mediador Pedagógico aparecem.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Exemplo do cenário do professor</h2>
+    <pre><code>Scenario: Teacher sees the full course team inline in the course page
+  When I am on the "Course 1" course page logged in as "teacher1"
+  Then I should see "Tutoring and pedagogical mediation team"
+  And I should see "Ana Tutora"
+  And I should see "Maria Mediadora"
+  And I should not see "My polo"</code></pre>
+    <p>Esse cenário confirma que o professor não recebe a experiência de estudante “Meu polo”. Ele vê a equipe completa da disciplina.</p>
+  </section>
+
+  <section>
+    <h2>Exemplo do cenário com JavaScript</h2>
+    <p>O terceiro cenário usa a tag <code>@javascript</code>, porque ele abre o seletor de atividades do Moodle, que depende de comportamento dinâmico no navegador.</p>
+    <pre><code>@javascript
+Scenario: Teacher can add the activity from the activity chooser
+  Given I log in as "teacher1"
+  And I am on "Course 1" course homepage with editing mode on
+  And I click on "Add an activity or resource" "button" in the "New section" "section"
+  And I click on "Add a new Tutoring information" "link" in the "Add an activity or resource" "dialogue"
+  And I set the following fields to these values:
+    | Name | Tutoring contacts |
+    | Student panel title | Support contacts |
+  When I press "Save and return to course"
+  Then I should see "Tutoring and pedagogical mediation team" in the "New section" "section"</code></pre>
+    <p>Esse teste garante que o plugin aparece no seletor de atividades e pode ser adicionado por um professor.</p>
+  </section>
+
+  <section>
+    <h2>Como configuramos o Behat neste ambiente</h2>
+    <p>O Moodle precisa de um ambiente separado para testes Behat. No <code>config.php</code> local, adicionamos:</p>
+    <pre><code>$CFG-&gt;behat_prefix = 'bht_';
+$CFG-&gt;behat_dataroot = '/var/www/behatdata';
+$CFG-&gt;behat_wwwroot = 'http://moodle45-app';
+$CFG-&gt;behat_profiles = array(
+    'chrome' =&gt; array(
+        'browser' =&gt; 'chrome',
+        'wd_host' =&gt; 'http://127.0.0.1:4444/wd/hub',
+        'capabilities' =&gt; array('browserName' =&gt; 'chrome'),
+    ),
+);</code></pre>
+    <p>O prefixo <code>bht_</code> faz o Behat usar tabelas separadas no banco. Assim ele não mistura dados de teste com o Moodle normal.</p>
+    <p>O <code>behat_dataroot</code> também é separado, para arquivos temporários do ambiente de teste.</p>
+  </section>
+
+  <section>
+    <h2>Por que usamos Selenium?</h2>
+    <p>Para cenários com <code>@javascript</code>, o Behat precisa controlar um navegador real. Para isso usamos o <strong>Selenium</strong>.</p>
+    <p>No nosso ambiente Docker, subimos um container com Chromium:</p>
+    <pre><code>docker run -d \
+  --name moodle45-selenium \
+  --network container:moodle45-app \
+  --shm-size=2g \
+  selenium/standalone-chromium:latest</code></pre>
+    <p>O detalhe importante é:</p>
+    <pre><code>--network container:moodle45-app</code></pre>
+    <p>Isso faz o Selenium compartilhar a rede do container do Moodle. Assim, de dentro do Moodle, o endereço <code>127.0.0.1:4444</code> aponta para o Selenium.</p>
+  </section>
+
+  <section>
+    <h2>Comandos usados</h2>
+    <h3>Inicializar o ambiente Behat</h3>
+    <pre><code>docker exec moodle45-app php /var/www/html/admin/tool/behat/cli/init.php</code></pre>
+
+    <h3>Rodar os testes Behat do plugin</h3>
+    <pre><code>docker exec moodle45-app bash -lc \
+  'cd /var/www/html &amp;&amp; vendor/bin/behat \
+   --config /var/www/behatdata/behatrun/behat/behat.yml \
+   --profile=chrome \
+   mod/uemsinfotutoria/tests/behat/inline_display.feature'</code></pre>
+
+    <h3>Rodar só cenários sem JavaScript</h3>
+    <pre><code>docker exec moodle45-app bash -lc \
+  'cd /var/www/html &amp;&amp; vendor/bin/behat \
+   --config /var/www/behatdata/behatrun/behat/behat.yml \
+   mod/uemsinfotutoria/tests/behat/inline_display.feature \
+   --tags="~@javascript"'</code></pre>
+  </section>
+
+  <section>
+    <h2>Resultado obtido</h2>
+    <p>Depois da configuração, o Behat rodou com sucesso:</p>
+    <pre><code>3 scenarios (3 passed)
+40 steps (40 passed)</code></pre>
+    <p>Isso significa que os três fluxos descritos no arquivo <code>inline_display.feature</code> passaram.</p>
+    <div class="ok">
+      <strong>Conclusão:</strong> o plugin foi validado não apenas por regras internas em PHPUnit, mas também por fluxos reais no navegador com Behat.
+    </div>
+  </section>
+
+  <section>
+    <h2>O que esse teste protege no futuro?</h2>
+    <p>Se alguém alterar o plugin e quebrar algum comportamento importante, o Behat pode avisar.</p>
+    <p>Exemplos de regressões que esse teste ajudaria a detectar:</p>
+    <ul>
+      <li>o plugin parar de aparecer inline na página da disciplina;</li>
+      <li>o estudante não ver mais o Polo;</li>
+      <li>o Tutor Presencial sumir por erro de renderização;</li>
+      <li>o Mediador Pedagógico sumir por erro de papel/grupo;</li>
+      <li>o professor passar a ver a aba “Meu polo” indevidamente;</li>
+      <li>a atividade sumir do seletor de atividades;</li>
+      <li>o formulário da atividade quebrar.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Limitações</h2>
+    <p>Behat é poderoso, mas não deve testar tudo.</p>
+    <ul>
+      <li>Ele é mais lento que PHPUnit.</li>
+      <li>Testes com navegador podem depender de Selenium.</li>
+      <li>É melhor usar Behat para fluxos críticos de usuário, não para cada detalhe interno.</li>
+    </ul>
+    <p>Por isso, neste projeto usamos uma combinação:</p>
+    <div class="grid">
+      <div class="card">
+        <h3>PHPUnit</h3>
+        <p>Para regras de domínio e dados: reoferta, polos, papéis, tutoria esperada e estados vazios.</p>
+      </div>
+      <div class="card">
+        <h3>Behat</h3>
+        <p>Para validar que o usuário consegue ver e adicionar a atividade no Moodle real.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Resumo final</h2>
+    <ul>
+      <li>Behat testa o Moodle como um usuário usaria pelo navegador.</li>
+      <li>O teste fica em <code>tests/behat/inline_display.feature</code>.</li>
+      <li>Ele cria dados temporários: curso, usuários, papéis, grupos e atividade.</li>
+      <li>Ele valida estudante, professor e activity chooser.</li>
+      <li>Para JavaScript, usamos Selenium com Chromium.</li>
+      <li>O resultado final foi: <code>3 scenarios (3 passed)</code>.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

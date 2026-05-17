@@ -52,13 +52,13 @@
         "all_has_tutors": false
     }
 }}
+{{#hascontent}}
 <div class="mod-uems-info-tutoria">
 
 {{#isstudent}}
 {{! ── Visão do estudante: alternância Meu polo / Lista completa ── }}
 <div class="uit-switcher-shell" data-region="uemsinfotutoria-switcher">
     <div class="uit-switcher-top">
-        <span class="uit-switcher-title">{{#str}} informacoestutoria, uemsinfotutoria {{/str}}</span>
         <div class="uit-toggle" role="tablist" aria-label="{{#str}} alternarvisualizacao, uemsinfotutoria {{/str}}">
             <button type="button" role="tab" aria-selected="true" data-view="mine" class="uit-toggle-btn">
                 {{#str}} meupolo, uemsinfotutoria {{/str}}
@@ -76,8 +76,7 @@
             <div class="uit-student-cover">
                 <aside class="uit-green-panel uit-student-side">
                     <div>
-                        <div class="uit-kicker">{{#str}} informacoestutoria, uemsinfotutoria {{/str}}</div>
-                        <div class="uit-big-title">{{#str}} seuponto, uemsinfotutoria {{/str}}</div>
+                        <div class="uit-big-title">{{supporttitle}}</div>
                     </div>
                     <div class="uit-polo-name">
                         <div class="uit-polo-label">{{#str}} seupolo, uemsinfotutoria {{/str}}</div>
@@ -90,8 +89,12 @@
 
                 <div class="uit-student-content">
                     <p class="uit-intro">{{#str}} intropolo, uemsinfotutoria {{/str}}</p>
+                    {{^has_polo}}
+                    <p class="uit-empty">{{nopolohelp}}</p>
+                    {{/has_polo}}
                     <div class="uit-team-line">
 
+                        {{#show_mediators}}
                         <article class="uit-card">
                             <h2 class="uit-role-title">{{mine_mediator_label}}</h2>
                             {{#mine_has_mediators}}
@@ -102,10 +105,12 @@
                             </div>
                             {{/mine_has_mediators}}
                             {{^mine_has_mediators}}
-                            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+                            <p class="uit-empty">{{mine_empty_mediators_message}}</p>
                             {{/mine_has_mediators}}
                         </article>
+                        {{/show_mediators}}
 
+                        {{#show_tutors}}
                         <article class="uit-card">
                             <h2 class="uit-role-title">{{mine_tutor_label}}</h2>
                             {{#mine_has_tutors}}
@@ -116,9 +121,10 @@
                             </div>
                             {{/mine_has_tutors}}
                             {{^mine_has_tutors}}
-                            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+                            <p class="uit-empty">{{mine_empty_tutors_message}}</p>
                             {{/mine_has_tutors}}
                         </article>
+                        {{/show_tutors}}
 
                     </div>
                 </div>
@@ -143,3 +149,11 @@
 {{#js}}
 require(['mod_uemsinfotutoria/view_toggle'], function(module) { module.init(); });
 {{/js}}
+{{/hascontent}}
+{{^hascontent}}
+{{#shownotice}}
+<div class="mod-uems-info-tutoria">
+    <p class="uit-empty">{{nofunctionsexpected}}</p>
+</div>
+{{/shownotice}}
+{{/hascontent}}

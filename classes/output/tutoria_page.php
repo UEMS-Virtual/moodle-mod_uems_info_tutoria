@@ -78,42 +78,69 @@ class tutoria_page implements \renderable, \templatable {
      * @return array<string, mixed>
      */
     public function export_for_template(\renderer_base $output): array {
-        $coursecontext = \context_course::instance($this->course->id);
-        $isstudent     = team_data::is_student($this->userid, $coursecontext);
+        $coursecontext   = \context_course::instance($this->course->id);
+        $isstudent       = team_data::is_student($this->userid, $coursecontext);
+        $canmanage       = team_data::can_manage_activities($this->userid, $coursecontext);
+        $expectmediators = team_data::expects_mediators($this->instance, $this->course);
+        $expecttutors    = team_data::expects_tutors($this->instance, $this->course);
+        $hascontent      = $expectmediators || $expecttutors;
 
-        $polo_groups  = team_data::get_polo_groups($this->course->id);
-        $team         = team_data::get_team($this->course->id, $this->context);
+        if (!$hascontent) {
+            return [
+                'hascontent' => false,
+                'shownotice' => $canmanage,
+                'nofunctionsexpected' => get_string('nofunctionsexpected', 'uemsinfotutoria'),
+            ];
+        }
+
+        $polo_groups = team_data::get_polo_groups($this->course->id);
+        $team        = team_data::get_team($this->course->id, $this->context);
 
         $mediators_data = $this->format_members($team['mediators']);
         $tutors_data    = $this->format_members($team['tutors']);
+        $supporttitle   = trim($this->instance->supporttitle ?? '');
+        if ($supporttitle === '') {
+            $supporttitle = get_string('seuponto', 'uemsinfotutoria');
+        }
+
+        $base = [
+            'hascontent' => true,
+            'shownotice' => false,
+            'show_mediators' => $expectmediators,
+            'show_tutors' => $expecttutors,
+            'all_mediators' => $mediators_data,
+            'all_tutors' => $tutors_data,
+            'all_has_mediators' => !empty($mediators_data),
+            'all_has_tutors' => !empty($tutors_data),
+            'all_empty_mediators_message' => get_string('mediatornotinformedcourse', 'uemsinfotutoria'),
+            'all_empty_tutors_message' => get_string('tutornotinformedcourse', 'uemsinfotutoria'),
+        ];
 
         if ($isstudent) {
             $student_polos = team_data::get_student_polos($this->userid, $polo_groups);
             $polo_name     = !empty($student_polos) ? $student_polos[0] : '';
+            $mine_mediators = $this->filter_by_polo($team['mediators'], $polo_name);
+            $mine_tutors    = $this->filter_by_polo($team['tutors'], $polo_name);
 
-            return [
+            return $base + [
                 'isstudent'           => true,
+                'supporttitle'        => $supporttitle,
                 'polo_name'           => $polo_name,
                 'has_polo'            => !empty($polo_name),
-                'mine_mediators'      => $this->filter_by_polo($team['mediators'], $polo_name),
-                'mine_tutors'         => $this->filter_by_polo($team['tutors'],    $polo_name),
-                'mine_has_mediators'  => !empty($this->filter_by_polo($team['mediators'], $polo_name)),
-                'mine_has_tutors'     => !empty($this->filter_by_polo($team['tutors'],    $polo_name)),
-                'mine_mediator_label' => $this->mediator_label(count($this->filter_by_polo($team['mediators'], $polo_name))),
-                'mine_tutor_label'    => $this->tutor_label(count($this->filter_by_polo($team['tutors'],    $polo_name))),
-                'all_mediators'       => $mediators_data,
-                'all_tutors'          => $tutors_data,
-                'all_has_mediators'   => !empty($mediators_data),
-                'all_has_tutors'      => !empty($tutors_data),
+                'mine_mediators'      => $mine_mediators,
+                'mine_tutors'         => $mine_tutors,
+                'mine_has_mediators'  => !empty($mine_mediators),
+                'mine_has_tutors'     => !empty($mine_tutors),
+                'mine_mediator_label' => $this->mediator_label(count($mine_mediators)),
+                'mine_tutor_label'    => $this->tutor_label(count($mine_tutors)),
+                'mine_empty_mediators_message' => get_string('mediatornotinformedpolo', 'uemsinfotutoria'),
+                'mine_empty_tutors_message' => get_string('tutornotinformedpolo', 'uemsinfotutoria'),
+                'nopolohelp' => get_string('nopolohelp', 'uemsinfotutoria'),
             ];
         }
 
-        return [
-            'isstudent'       => false,
-            'all_mediators'   => $mediators_data,
-            'all_tutors'      => $tutors_data,
-            'all_has_mediators' => !empty($mediators_data),
-            'all_has_tutors'    => !empty($tutors_data),
+        return $base + [
+            'isstudent' => false,
         ];
     }
 
@@ -156,7 +183,7 @@ class tutoria_page implements \renderable, \templatable {
      */
     private function filter_by_polo(array $members, string $polo_name): array {
         if ($polo_name === '') {
-            return $this->format_members($members);
+            return [];
         }
 
         $filtered = array_filter($members, function ($m) use ($polo_name) {

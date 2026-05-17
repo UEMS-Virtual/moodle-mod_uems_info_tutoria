@@ -20,13 +20,13 @@
 }}
 <div class="uit-full-view">
     <header class="uit-green-panel uit-full-hero">
-        <div class="uit-kicker">{{#str}} informacoestutoria, uemsinfotutoria {{/str}}</div>
         <div class="uit-big-title">{{#str}} equipetutoria, uemsinfotutoria {{/str}}</div>
         <p class="uit-full-intro">{{#str}} introfull, uemsinfotutoria {{/str}}</p>
     </header>
 
     <div class="uit-full-content">
 
+        {{#show_mediators}}
         <section class="uit-full-panel">
             <h2 class="uit-role-title">{{#str}} mediadorespedagogicos, uemsinfotutoria {{/str}}</h2>
             {{#all_has_mediators}}
@@ -37,10 +37,12 @@
             </div>
             {{/all_has_mediators}}
             {{^all_has_mediators}}
-            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+            <p class="uit-empty">{{all_empty_mediators_message}}</p>
             {{/all_has_mediators}}
         </section>
+        {{/show_mediators}}
 
+        {{#show_tutors}}
         <section class="uit-full-panel">
             <h2 class="uit-role-title">{{#str}} tutorespresenciais, uemsinfotutoria {{/str}}</h2>
             {{#all_has_tutors}}
@@ -51,9 +53,10 @@
             </div>
             {{/all_has_tutors}}
             {{^all_has_tutors}}
-            <p class="uit-empty">{{#str}} sempessoa, uemsinfotutoria {{/str}}</p>
+            <p class="uit-empty">{{all_empty_tutors_message}}</p>
             {{/all_has_tutors}}
         </section>
+        {{/show_tutors}}
 
     </div>
 </div>

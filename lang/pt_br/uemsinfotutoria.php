@@ -24,6 +24,8 @@
 
 $string['modulename'] = 'Informações de tutoria';
 $string['modulename_help'] = 'A atividade Informações de tutoria exibe informações de tutoria e mediação pedagógica do curso por polo.';
+$string['defaultname'] = 'Equipe de tutoria e mediação pedagógica';
+$string['defaultintro'] = 'Relação da mediação pedagógica e da tutoria vinculadas aos polos da disciplina.';
 $string['modulenameplural'] = 'Informações de tutoria';
 $string['pluginadministration'] = 'Administração de Informações de tutoria';
 $string['pluginname'] = 'Informações de tutoria';
@@ -32,13 +34,18 @@ $string['uemsinfotutoria:addinstance'] = 'Adicionar uma nova atividade Informaç
 $string['uemsinfotutoria:view'] = 'Visualizar atividade Informações de tutoria';
 
 // Interface — labels and titles.
-$string['informacoestutoria']   = 'Informações de tutoria';
 $string['equipetutoria']        = 'Equipe de tutoria e mediação pedagógica';
 $string['seuponto']             = 'Seu ponto de apoio';
 $string['seupolo']              = 'Seu polo';
 $string['meupolo']              = 'Meu polo';
 $string['listacompleta']        = 'Lista completa';
 $string['alternarvisualizacao'] = 'Alternar visualização';
+$string['supporttitle'] = 'Título do painel do estudante';
+$string['expect:auto'] = 'Automático';
+$string['expecttutor'] = 'Tutor Presencial esperado';
+$string['expecttutor_help'] = 'No modo automático, o Tutor Presencial é esperado.';
+$string['expectmediator'] = 'Mediador Pedagógico esperado';
+$string['expectmediator_help'] = 'No modo automático, o Mediador Pedagógico não é esperado em disciplinas de reoferta identificadas por REO/REO2 no shortname. Nos demais casos, ele é esperado.';
 
 // Role labels.
 $string['mediadorpedagogico']   = 'Mediador Pedagógico';
@@ -57,6 +64,12 @@ $string['introfull'] = 'Relação da mediação pedagógica e da tutoria vincula
 // Empty states.
 $string['sempessoa']          = 'Nenhuma pessoa encontrada para esta função.';
 $string['sempoloidentificado'] = 'Polo não identificado';
+$string['tutornotinformedcourse'] = 'Tutor Presencial não informado para a disciplina.';
+$string['mediatornotinformedcourse'] = 'Mediador Pedagógico não informado para a disciplina.';
+$string['tutornotinformedpolo'] = 'Tutor Presencial não informado para seu polo.';
+$string['mediatornotinformedpolo'] = 'Mediador Pedagógico não informado para seu polo.';
+$string['nofunctionsexpected'] = 'Nenhuma função de tutoria está configurada para exibição nesta atividade.';
+$string['nopolohelp'] = 'Use a Lista completa para consultar a equipe da disciplina.';
 
 // Accessibility.
 $string['fotode'] = 'Foto de {$a}';

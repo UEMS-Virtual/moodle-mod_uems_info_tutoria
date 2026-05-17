@@ -20,23 +20,15 @@
     overflow: hidden;
 }
 
-/* ── Switcher top bar (title + toggle buttons) ── */
+/* ── Switcher top bar (toggle buttons) ── */
 .mod-uems-info-tutoria .uit-switcher-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: 1.125rem;
     padding: 1rem 1.125rem;
     border-bottom: 1px solid #dee2e6;
     background: #fbfdff;
-}
-
-.mod-uems-info-tutoria .uit-switcher-title {
-    font-weight: 900;
-    color: var(--primary, #0f6cbf);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    font-size: .75rem;
 }
 
 .mod-uems-info-tutoria .uit-toggle {
@@ -368,11 +360,11 @@
     }
 
     .mod-uems-info-tutoria .uit-switcher-top {
-        display: block;
+        display: flex;
+        justify-content: flex-end;
     }
 
     .mod-uems-info-tutoria .uit-toggle {
-        margin-top: .75rem;
         width: max-content;
         max-width: 100%;
     }

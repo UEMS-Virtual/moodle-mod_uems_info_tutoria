@@ -49,9 +49,6 @@ $PAGE->set_title(format_string($uemsinfotutoria->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-$completion = new completion_info($course);
-$completion->set_module_viewed($cm);
-
 echo $OUTPUT->header();
 
 $renderer = $PAGE->get_renderer('mod_uemsinfotutoria');

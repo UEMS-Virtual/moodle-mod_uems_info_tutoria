@@ -36,6 +36,8 @@ function uemsinfotutoria_supports(string $feature) {
         case FEATURE_SHOW_DESCRIPTION:
         case FEATURE_NO_VIEW_LINK:
             return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return false;
         case FEATURE_MOD_ARCHETYPE:
             return MOD_ARCHETYPE_RESOURCE;
         case FEATURE_MOD_PURPOSE:
@@ -60,7 +62,7 @@ function uemsinfotutoria_get_coursemodule_info(stdClass $coursemodule): ?cached_
     $instance = $DB->get_record(
         'uemsinfotutoria',
         ['id' => $coursemodule->instance],
-        'id, name, intro, introformat'
+        'id, name, intro, introformat, supporttitle, expecttutor, expectmediator'
     );
     if (!$instance) {
         return null;
@@ -83,6 +85,15 @@ function uemsinfotutoria_get_coursemodule_info(stdClass $coursemodule): ?cached_
 function uemsinfotutoria_cm_info_view(cm_info $cm): void {
     global $DB, $PAGE;
 
+    if (!$cm->uservisible) {
+        return;
+    }
+
+    $context = context_module::instance($cm->id);
+    if (!has_capability('mod/uemsinfotutoria:view', $context)) {
+        return;
+    }
+
     $instance = $DB->get_record('uemsinfotutoria', ['id' => $cm->instance]);
     if (!$instance) {
         $cm->set_custom_cmlist_item(true);
@@ -90,7 +101,6 @@ function uemsinfotutoria_cm_info_view(cm_info $cm): void {
     }
 
     $course  = get_course($cm->course);
-    $context = context_module::instance($cm->id);
 
     $renderer   = $PAGE->get_renderer('mod_uemsinfotutoria');
     $renderable = new \mod_uemsinfotutoria\output\tutoria_page($instance, $cm, $course, $context);

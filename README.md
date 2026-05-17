@@ -1,4 +1,4 @@
-# mod_uems_info_tutoria
+# mod_uemsinfotutoria
 
 Plugin Moodle para exibir a equipe de tutoria e mediação pedagógica de uma disciplina.
 
