@@ -183,7 +183,7 @@
 .mod-uems-info-tutoria .uit-polo-value {
     font-size: 1.3125rem;
     line-height: 1.22;
-    font-weight: 900;
+    font-weight: 700;
     overflow-wrap: anywhere;
     hyphens: auto;
 }
@@ -335,7 +335,7 @@
     font-size: .875rem;
     line-height: 1.45;
     text-align: left;
-    font-weight: 700;
+    font-weight: 500;
     overflow-wrap: anywhere;
     hyphens: auto;
 }
