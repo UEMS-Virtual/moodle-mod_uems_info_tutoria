@@ -55,7 +55,7 @@ $string['tutorespresenciais']    = 'On-site Tutors';
 
 // Polo labels.
 $string['polo']           = 'Polo';
-$string['polosatendidos'] = 'Polos served';
+$string['polosatendidos'] = 'Polos';
 
 // Intro texts.
 $string['intropolo'] = 'These are the people assigned to the polo you are enrolled in.';

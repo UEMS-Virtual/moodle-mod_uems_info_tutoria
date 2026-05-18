@@ -265,7 +265,7 @@
 }
 
 .mod-uems-info-tutoria .uit-full-panel .uit-role-title {
-    font-size: .75rem;
+    font-size: .8125rem;
     letter-spacing: .08em;
     margin-bottom: .5rem;
     padding-left: .625rem;
@@ -324,6 +324,7 @@
 }
 
 .mod-uems-info-tutoria .uit-full-person .uit-photo {
+    grid-row: 1 / span 2;
     width: 44px;
     height: 44px;
     border-radius: .75rem;
@@ -340,7 +341,7 @@
 .mod-uems-info-tutoria .uit-full-person .uit-name {
     font-size: 1rem;
     line-height: 1.2;
-    margin-bottom: .125rem;
+    margin-bottom: 0;
 }
 
 .mod-uems-info-tutoria .uit-name a {
