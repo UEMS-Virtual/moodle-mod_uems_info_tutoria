@@ -98,10 +98,17 @@ class tutoria_page implements \renderable, \templatable {
 
         $mediators_data = $this->format_members($team['mediators']);
         $tutors_data    = $this->format_members($team['tutors']);
-        $supporttitle   = trim($this->instance->supporttitle ?? '');
+        $supporttitle = trim($this->instance->supporttitle ?? '');
         if ($supporttitle === '') {
             $supporttitle = get_string('seuponto', 'uemsinfotutoria');
         }
+
+        $fullintro = trim($this->instance->intro ?? '');
+        $fullintro = $fullintro === '' ? '' : format_text(
+            $fullintro,
+            $this->instance->introformat ?? FORMAT_HTML,
+            ['context' => $this->context]
+        );
 
         $base = [
             'hascontent' => true,
@@ -114,6 +121,8 @@ class tutoria_page implements \renderable, \templatable {
             'all_has_tutors' => !empty($tutors_data),
             'all_empty_mediators_message' => get_string('mediatornotinformedcourse', 'uemsinfotutoria'),
             'all_empty_tutors_message' => get_string('tutornotinformedcourse', 'uemsinfotutoria'),
+            'full_intro' => $fullintro,
+            'has_full_intro' => $fullintro !== '',
         ];
 
         if ($isstudent) {
@@ -235,21 +244,17 @@ class tutoria_page implements \renderable, \templatable {
     }
 
     /**
-     * Singular/plural label for mediators.
+     * Neutral label for pedagogical mediation.
      */
     private function mediator_label(int $count): string {
-        return $count === 1
-            ? get_string('mediadorpedagogico', 'uemsinfotutoria')
-            : get_string('mediadorespedagogicos', 'uemsinfotutoria');
+        return get_string('mediadorespedagogicos', 'uemsinfotutoria');
     }
 
     /**
-     * Singular/plural label for tutors.
+     * Neutral label for on-site tutoring.
      */
     private function tutor_label(int $count): string {
-        return $count === 1
-            ? get_string('tutorpresencial', 'uemsinfotutoria')
-            : get_string('tutorespresenciais', 'uemsinfotutoria');
+        return get_string('tutorespresenciais', 'uemsinfotutoria');
     }
 
 }

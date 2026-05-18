@@ -24,8 +24,8 @@
 
 $string['modulename'] = 'Tutoring information';
 $string['modulename_help'] = 'The Tutoring information activity displays course tutoring and pedagogical mediation information by polo.';
-$string['defaultname'] = 'Tutoring and pedagogical mediation team';
-$string['defaultintro'] = 'Pedagogical mediation and tutoring team assigned to the course polos.';
+$string['defaultname'] = 'Tutoring and Mediation Team';
+$string['defaultintro'] = '';
 $string['modulenameplural'] = 'Tutoring information';
 $string['pluginadministration'] = 'Tutoring information administration';
 $string['pluginname'] = 'Tutoring information';
@@ -34,8 +34,8 @@ $string['uemsinfotutoria:addinstance'] = 'Add a new Tutoring information activit
 $string['uemsinfotutoria:view'] = 'View Tutoring information activity';
 
 // Interface — labels and titles.
-$string['equipetutoria']        = 'Tutoring and pedagogical mediation team';
-$string['seuponto']             = 'Your support point';
+$string['equipetutoria']        = 'Tutoring and Mediation Team';
+$string['seuponto']             = 'Your Tutoring and Mediation Team';
 $string['seupolo']              = 'Your polo';
 $string['meupolo']              = 'My polo';
 $string['listacompleta']        = 'Full list';
@@ -48,17 +48,17 @@ $string['expectmediator'] = 'Pedagogical Mediator expected';
 $string['expectmediator_help'] = 'In automatic mode, the Pedagogical Mediator is not expected in reoffer courses identified by REO/REO2 in the shortname. In all other cases, it is expected.';
 
 // Role labels.
-$string['mediadorpedagogico']    = 'Pedagogical Mediator';
-$string['mediadorespedagogicos'] = 'Pedagogical Mediators';
-$string['tutorpresencial']       = 'On-site Tutor';
-$string['tutorespresenciais']    = 'On-site Tutors';
+$string['mediadorpedagogico']    = 'Pedagogical Mediation';
+$string['mediadorespedagogicos'] = 'Pedagogical Mediation';
+$string['tutorpresencial']       = 'On-site Tutoring';
+$string['tutorespresenciais']    = 'On-site Tutoring';
 
 // Polo labels.
 $string['polo']           = 'Polo';
 $string['polosatendidos'] = 'Polos';
 
 // Intro texts.
-$string['intropolo'] = 'These are the people assigned to the polo you are enrolled in.';
+$string['intropolo'] = '';
 $string['introfull'] = 'Pedagogical mediation and tutoring team assigned to the course polos.';
 
 // Empty states.

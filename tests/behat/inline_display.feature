@@ -36,15 +36,15 @@ Feature: Display tutoring information inline in the course
       | activity       | uemsinfotutoria |
       | course         | C1              |
       | idnumber       | UIT1            |
-      | name           | Tutoring and pedagogical mediation team |
+      | name           | Tutoring and Mediation Team |
       | intro          | Pedagogical mediation and tutoring team assigned to the course polos. |
-      | supporttitle   | Your support point |
+      | supporttitle   | Your Tutoring and Mediation Team |
       | expecttutor    | 1               |
       | expectmediator | 1               |
 
   Scenario: Student sees their polo contacts inline in the course page
     When I am on the "Course 1" course page logged in as "student1"
-    Then I should see "Your support point"
+    Then I should see "Your Tutoring and Mediation Team"
     And I should see "Polo Bataguassu"
     And I should see "Ana Tutora"
     And I should see "Maria Mediadora"
@@ -53,7 +53,7 @@ Feature: Display tutoring information inline in the course
 
   Scenario: Teacher sees the full course team inline in the course page
     When I am on the "Course 1" course page logged in as "teacher1"
-    Then I should see "Tutoring and pedagogical mediation team"
+    Then I should see "Tutoring and Mediation Team"
     And I should see "Ana Tutora"
     And I should see "Maria Mediadora"
     And I should not see "My polo"
@@ -68,4 +68,4 @@ Feature: Display tutoring information inline in the course
       | Name | Tutoring contacts |
       | Student panel title | Support contacts |
     When I press "Save and return to course"
-    Then I should see "Tutoring and pedagogical mediation team" in the "New section" "section"
+    Then I should see "Tutoring and Mediation Team" in the "New section" "section"

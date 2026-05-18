@@ -24,8 +24,8 @@
 
 $string['modulename'] = 'Informações de tutoria';
 $string['modulename_help'] = 'A atividade Informações de tutoria exibe informações de tutoria e mediação pedagógica do curso por polo.';
-$string['defaultname'] = 'Equipe de tutoria e mediação pedagógica';
-$string['defaultintro'] = 'Relação da mediação pedagógica e da tutoria vinculadas aos polos da disciplina.';
+$string['defaultname'] = 'Equipe de Tutoria e Mediação';
+$string['defaultintro'] = '';
 $string['modulenameplural'] = 'Informações de tutoria';
 $string['pluginadministration'] = 'Administração de Informações de tutoria';
 $string['pluginname'] = 'Informações de tutoria';
@@ -34,8 +34,8 @@ $string['uemsinfotutoria:addinstance'] = 'Adicionar uma nova atividade Informaç
 $string['uemsinfotutoria:view'] = 'Visualizar atividade Informações de tutoria';
 
 // Interface — labels and titles.
-$string['equipetutoria']        = 'Equipe de tutoria e mediação pedagógica';
-$string['seuponto']             = 'Seu ponto de apoio';
+$string['equipetutoria']        = 'Equipe de Tutoria e Mediação';
+$string['seuponto']             = 'Sua Equipe de Tutoria e Mediação';
 $string['seupolo']              = 'Seu polo';
 $string['meupolo']              = 'Meu polo';
 $string['listacompleta']        = 'Lista completa';
@@ -48,17 +48,17 @@ $string['expectmediator'] = 'Mediador Pedagógico esperado';
 $string['expectmediator_help'] = 'No modo automático, o Mediador Pedagógico não é esperado em disciplinas de reoferta identificadas por REO/REO2 no shortname. Nos demais casos, ele é esperado.';
 
 // Role labels.
-$string['mediadorpedagogico']   = 'Mediador Pedagógico';
-$string['mediadorespedagogicos'] = 'Mediadores Pedagógicos';
-$string['tutorpresencial']      = 'Tutor Presencial';
-$string['tutorespresenciais']   = 'Tutores Presenciais';
+$string['mediadorpedagogico']   = 'Mediação Pedagógica';
+$string['mediadorespedagogicos'] = 'Mediação Pedagógica';
+$string['tutorpresencial']      = 'Tutoria Presencial';
+$string['tutorespresenciais']   = 'Tutoria Presencial';
 
 // Polo labels.
 $string['polo']          = 'Polo';
 $string['polosatendidos'] = 'Polos';
 
 // Intro texts.
-$string['intropolo'] = 'Estas são as pessoas vinculadas ao polo em que você está matriculado.';
+$string['intropolo'] = '';
 $string['introfull'] = 'Relação da mediação pedagógica e da tutoria vinculadas aos polos da disciplina.';
 
 // Empty states.

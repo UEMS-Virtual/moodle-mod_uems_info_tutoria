@@ -21,7 +21,9 @@
 <div class="uit-full-view">
     <header class="uit-green-panel uit-full-hero">
         <div class="uit-big-title">{{#str}} equipetutoria, uemsinfotutoria {{/str}}</div>
-        <p class="uit-full-intro">{{#str}} introfull, uemsinfotutoria {{/str}}</p>
+        {{#has_full_intro}}
+        <div class="uit-full-intro">{{{full_intro}}}</div>
+        {{/has_full_intro}}
     </header>
 
     <div class="uit-full-content">

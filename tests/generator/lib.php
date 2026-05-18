@@ -46,7 +46,7 @@ class mod_uemsinfotutoria_generator extends testing_module_generator {
         $record = (object) (array) $record;
 
         if (!isset($record->name)) {
-            $record->name = 'Equipe de tutoria e mediação pedagógica';
+            $record->name = 'Equipe de Tutoria e Mediação';
         }
         if (!isset($record->intro)) {
             $record->intro = '';
@@ -55,7 +55,7 @@ class mod_uemsinfotutoria_generator extends testing_module_generator {
             $record->introformat = FORMAT_HTML;
         }
         if (!isset($record->supporttitle)) {
-            $record->supporttitle = 'Seu ponto de apoio';
+            $record->supporttitle = 'Sua Equipe de Tutoria e Mediação';
         }
         if (!isset($record->expecttutor)) {
             $record->expecttutor = 0;

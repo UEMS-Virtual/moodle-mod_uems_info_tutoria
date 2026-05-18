@@ -67,6 +67,63 @@ final class output_test extends \advanced_testcase {
         $this->assertCount(1, $data['all_tutors']);
     }
 
+    public function test_student_panel_uses_new_default_title_and_hides_empty_full_intro(): void {
+        global $PAGE;
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $module = $generator->create_module('uemsinfotutoria', [
+            'course' => $course->id,
+            'intro' => '',
+            'introformat' => FORMAT_HTML,
+            'supporttitle' => '',
+            'expecttutor' => team_data::EXPECT_YES,
+            'expectmediator' => team_data::EXPECT_YES,
+        ]);
+        $module->intro = '';
+        $cm = get_coursemodule_from_instance('uemsinfotutoria', $module->id, $course->id, false, MUST_EXIST);
+        $context = \context_module::instance($cm->id);
+        $PAGE->set_context($context);
+
+        $student = $generator->create_and_enrol($course, 'student');
+        $this->setUser($student);
+
+        $data = (new tutoria_page($module, $cm, $course, $context, $student->id))
+            ->export_for_template($PAGE->get_renderer('core'));
+
+        $this->assertSame(get_string('seuponto', 'uemsinfotutoria'), $data['supporttitle']);
+        $this->assertSame('', $data['full_intro']);
+        $this->assertFalse($data['has_full_intro']);
+        $this->assertSame(get_string('mediadorespedagogicos', 'uemsinfotutoria'), $data['mine_mediator_label']);
+        $this->assertSame(get_string('tutorespresenciais', 'uemsinfotutoria'), $data['mine_tutor_label']);
+    }
+
+    public function test_full_intro_is_shown_when_configured(): void {
+        global $PAGE;
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $module = $generator->create_module('uemsinfotutoria', [
+            'course' => $course->id,
+            'intro' => 'Subtítulo opcional da lista completa',
+            'introformat' => FORMAT_HTML,
+            'expecttutor' => team_data::EXPECT_YES,
+            'expectmediator' => team_data::EXPECT_NO,
+        ]);
+        $cm = get_coursemodule_from_instance('uemsinfotutoria', $module->id, $course->id, false, MUST_EXIST);
+        $context = \context_module::instance($cm->id);
+        $PAGE->set_context($context);
+
+        $teacher = $generator->create_and_enrol($course, 'editingteacher');
+        $this->setUser($teacher);
+
+        $data = (new tutoria_page($module, $cm, $course, $context, $teacher->id))
+            ->export_for_template($PAGE->get_renderer('core'));
+
+        $this->assertTrue($data['has_full_intro']);
+        $this->assertStringContainsString('Subtítulo opcional da lista completa', $data['full_intro']);
+    }
+
     public function test_polo_names_are_normalized_for_display_without_affecting_filtering(): void {
         global $PAGE;
 

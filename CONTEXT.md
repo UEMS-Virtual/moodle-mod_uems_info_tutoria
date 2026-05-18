@@ -20,9 +20,9 @@ _Avoid_: Tutor, tutor da sala
 Usuário ativo da Disciplina com papel institucional `mod_medpdg`.
 _Avoid_: Mediador, professor mediador
 
-**Equipe de tutoria e mediação pedagógica**:
+**Equipe de Tutoria e Mediação**:
 Conjunto de Tutores Presenciais e Mediadores Pedagógicos ativos vinculados à Disciplina.
-_Avoid_: Informações de tutoria
+_Avoid_: Informações de tutoria, Equipe de tutoria e mediação pedagógica
 
 **Tutoria esperada**:
 Configuração da Disciplina que indica, separadamente, se a presença de Tutor Presencial e se a presença de Mediador Pedagógico são esperadas para aquela atividade; cada função pode estar em modo Automático, Sim ou Não.
@@ -37,7 +37,7 @@ Oferta em que pode haver Tutor Presencial esperado para ações de polo, como ap
 _Avoid_: Disciplina sem tutoria
 
 **Lista completa**:
-Visualização que mostra a Equipe de tutoria e mediação pedagógica da Disciplina inteira.
+Visualização que mostra a Equipe de Tutoria e Mediação da Disciplina inteira.
 _Avoid_: Visão institucional, todos
 
 **Meu polo**:
@@ -56,7 +56,7 @@ _Avoid_: Minha sala, meu grupo
 - O **Marcador de reoferta** deve ser detectado como token isolado, aceitando separadores como parênteses, underscore e hífen; não deve casar trechos internos de outras palavras.
 - O formulário da atividade oferece Automático, Sim e Não para Tutor Presencial esperado e Mediador Pedagógico esperado; o modo Automático é explicado em textos de ajuda, sem necessidade inicial de mostrar o valor resolvido no formulário.
 - Um **Polo** pode ter zero ou mais **Tutores Presenciais** e zero ou mais **Mediadores Pedagógicos** vinculados via participação em grupo.
-- A **Equipe de tutoria e mediação pedagógica** pertence a uma **Disciplina**.
+- A **Equipe de Tutoria e Mediação** pertence a uma **Disciplina**.
 - A **Lista completa** é calculada a partir da **Disciplina** inteira.
 - **Meu polo** é calculado a partir do **Polo** do estudante.
 - Se o estudante não pertence a nenhum **Polo**, **Meu polo** não deve mostrar a equipe da Disciplina como fallback.
