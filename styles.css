@@ -350,6 +350,13 @@
     margin-bottom: .25rem;
 }
 
+.mod-uems-info-tutoria .uit-polos-separator {
+    color: #adb5bd;
+    font-size: 1.15em;
+    font-weight: 900;
+    margin: 0 .7rem;
+}
+
 /* ── Empty state ── */
 .mod-uems-info-tutoria .uit-empty {
     color: var(--gray, #6a737b);

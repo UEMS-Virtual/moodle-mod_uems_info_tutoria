@@ -157,7 +157,14 @@ class tutoria_page implements \renderable, \templatable {
             $polos  = $m['polos'];
             $count  = count($polos);
 
-            $polos_text  = $this->join_polos($polos);
+            $polos_items = [];
+            foreach (array_values($polos) as $index => $polo) {
+                $polos_items[] = [
+                    'name'          => $polo,
+                    'has_separator' => $index > 0,
+                ];
+            }
+
             $polos_label = $count > 1
                 ? get_string('polosatendidos', 'uemsinfotutoria')
                 : get_string('polo', 'uemsinfotutoria');
@@ -167,7 +174,7 @@ class tutoria_page implements \renderable, \templatable {
                 'profileimageurl' => $m['profileimageurl'],
                 'messageurl'      => $m['messageurl'],
                 'polos_label'     => $polos_label,
-                'polos_text'      => $polos_text,
+                'polos_items'     => $polos_items,
                 'has_polos'       => !empty($polos),
             ];
         }
@@ -211,13 +218,4 @@ class tutoria_page implements \renderable, \templatable {
             : get_string('tutorespresenciais', 'uemsinfotutoria');
     }
 
-    /**
-     * Join polo names with a middle dot separator (A · B · C).
-     *
-     * @param string[] $polos
-     * @return string
-     */
-    private function join_polos(array $polos): string {
-        return implode(' · ', $polos);
-    }
 }
