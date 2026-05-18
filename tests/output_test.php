@@ -67,6 +67,56 @@ final class output_test extends \advanced_testcase {
         $this->assertCount(1, $data['all_tutors']);
     }
 
+    public function test_polo_names_are_normalized_for_display_without_affecting_filtering(): void {
+        global $PAGE;
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $module = $generator->create_module('uemsinfotutoria', [
+            'course' => $course->id,
+            'expecttutor' => team_data::EXPECT_YES,
+            'expectmediator' => team_data::EXPECT_NO,
+        ]);
+        $cm = get_coursemodule_from_instance('uemsinfotutoria', $module->id, $course->id, false, MUST_EXIST);
+        $context = \context_module::instance($cm->id);
+        $PAGE->set_context($context);
+
+        $tutorroleid = $this->ensure_role(team_data::ROLE_TUTOR, 'Tutor Presencial');
+        $student = $generator->create_and_enrol($course, 'student');
+        $teacher = $generator->create_and_enrol($course, 'editingteacher');
+        $tutor = $generator->create_user(['firstname' => 'Ana', 'lastname' => 'Tutora']);
+        $generator->enrol_user($tutor->id, $course->id, $tutorroleid);
+
+        $rawnames = [
+            'POLO UAB DE BATAGUASSU',
+            'POLO UAB DE CAMPO GRANDE',
+            'POLO ASSOCIADO DE NOVA ANDRADINA',
+            'POLO DE RIO BRILHANTE',
+        ];
+        foreach ($rawnames as $rawname) {
+            $group = $generator->create_group(['courseid' => $course->id, 'name' => $rawname]);
+            groups_add_member($group, $tutor);
+            if ($rawname === 'POLO UAB DE CAMPO GRANDE') {
+                groups_add_member($group, $student);
+            }
+        }
+
+        $this->setUser($student);
+        $studentdata = (new tutoria_page($module, $cm, $course, $context, $student->id))
+            ->export_for_template($PAGE->get_renderer('core'));
+
+        $this->assertSame('Campo Grande', $studentdata['polo_name']);
+        $this->assertTrue($studentdata['mine_has_tutors']);
+
+        $this->setUser($teacher);
+        $teacherdata = (new tutoria_page($module, $cm, $course, $context, $teacher->id))
+            ->export_for_template($PAGE->get_renderer('core'));
+
+        $polonames = array_column($teacherdata['all_tutors'][0]['polos_items'], 'name');
+        sort($polonames);
+        $this->assertSame(['Bataguassu', 'Campo Grande', 'Nova Andradina', 'Rio Brilhante'], $polonames);
+    }
+
     public function test_non_expected_functions_are_hidden_and_manager_gets_notice_when_none_expected(): void {
         global $PAGE;
 

@@ -125,7 +125,7 @@ class tutoria_page implements \renderable, \templatable {
             return $base + [
                 'isstudent'           => true,
                 'supporttitle'        => $supporttitle,
-                'polo_name'           => $polo_name,
+                'polo_name'           => self::format_polo_name($polo_name),
                 'has_polo'            => !empty($polo_name),
                 'mine_mediators'      => $mine_mediators,
                 'mine_tutors'         => $mine_tutors,
@@ -160,7 +160,7 @@ class tutoria_page implements \renderable, \templatable {
             $polos_items = [];
             foreach (array_values($polos) as $index => $polo) {
                 $polos_items[] = [
-                    'name'          => $polo,
+                    'name'          => self::format_polo_name($polo),
                     'has_separator' => $index > 0,
                 ];
             }
@@ -198,6 +198,40 @@ class tutoria_page implements \renderable, \templatable {
         });
 
         return $this->format_members(array_values($filtered));
+    }
+
+    /**
+     * Format polo names for display only.
+     *
+     * @param string $name Raw Moodle group name.
+     * @return string Display name.
+     */
+    private static function format_polo_name(string $name): string {
+        $name = trim($name);
+        $name = preg_replace('/^polo(?:\s+uab)?(?:\s+associado)?(?:\s+(?:de|da|do|das|dos))?\s+/iu', '', $name);
+        $name = trim($name ?? '');
+
+        if ($name === '') {
+            return '';
+        }
+
+        $connectors = ['de', 'da', 'do', 'das', 'dos', 'e'];
+        $words = preg_split('/(\s+)/u', \core_text::strtolower($name), -1, PREG_SPLIT_DELIM_CAPTURE);
+        $wordindex = 0;
+
+        foreach ($words as $index => $word) {
+            if (trim($word) === '') {
+                continue;
+            }
+            if ($wordindex > 0 && in_array($word, $connectors, true)) {
+                $wordindex++;
+                continue;
+            }
+            $words[$index] = \core_text::strtoupper(\core_text::substr($word, 0, 1)) . \core_text::substr($word, 1);
+            $wordindex++;
+        }
+
+        return implode('', $words);
     }
 
     /**
