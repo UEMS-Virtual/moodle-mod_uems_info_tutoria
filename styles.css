@@ -554,6 +554,15 @@
     .mod-uems-info-tutoria .uit-person {
         gap: .75rem;
     }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-label,
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-list {
+        display: block;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-label {
+        margin: 0 0 .125rem;
+    }
 }
 
 /* ═══════════════════════════════════════════
