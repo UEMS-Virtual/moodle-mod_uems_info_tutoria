@@ -212,19 +212,12 @@ class tutoria_page implements \renderable, \templatable {
     }
 
     /**
-     * Join polo names in natural-language list (A, B e C).
+     * Join polo names with a middle dot separator (A · B · C).
      *
      * @param string[] $polos
      * @return string
      */
     private function join_polos(array $polos): string {
-        if (empty($polos)) {
-            return '';
-        }
-        if (count($polos) === 1) {
-            return $polos[0];
-        }
-        $last = array_pop($polos);
-        return implode(', ', $polos) . ' e ' . $last;
+        return implode(' · ', $polos);
     }
 }
