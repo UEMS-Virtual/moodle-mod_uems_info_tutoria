@@ -184,6 +184,8 @@
     font-size: 1.3125rem;
     line-height: 1.22;
     font-weight: 900;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .mod-uems-info-tutoria .uit-student-content {
@@ -279,8 +281,9 @@
 /* Full person (full view) */
 .mod-uems-info-tutoria .uit-full-person {
     display: grid;
-    grid-template-columns: 72px minmax(380px, 1fr) 190px;
-    gap: 1.125rem;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 1.125rem;
+    row-gap: .25rem;
     align-items: center;
     padding-bottom: 1.125rem;
     border-bottom: 1px solid #eef2f6;
@@ -327,11 +330,14 @@
 
 /* ── Polos text (full view) ── */
 .mod-uems-info-tutoria .uit-polos {
+    grid-column: 2;
     color: var(--dark, #343a40);
     font-size: .875rem;
     line-height: 1.45;
-    text-align: right;
+    text-align: left;
     font-weight: 700;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .mod-uems-info-tutoria .uit-polos-label {
@@ -414,8 +420,9 @@
     }
 
     .mod-uems-info-tutoria .uit-full-person {
-        grid-template-columns: 56px 1fr;
-        gap: .75rem;
+        grid-template-columns: 56px minmax(0, 1fr);
+        column-gap: .75rem;
+        row-gap: .25rem;
         align-items: start;
     }
 
