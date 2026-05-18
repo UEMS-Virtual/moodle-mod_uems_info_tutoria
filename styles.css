@@ -625,6 +625,7 @@
     .mod-uems-info-tutoria .uit-full-person {
         column-gap: .625rem;
         row-gap: 0;
+        padding: .75rem 0;
     }
 
     .mod-uems-info-tutoria .uit-photo,
