@@ -239,7 +239,7 @@
 
 /* ── Full view content ── */
 .mod-uems-info-tutoria .uit-full-content {
-    padding: 1rem 1.25rem 1.25rem;
+    padding: 1rem 0 1.25rem;
     display: grid;
     gap: .875rem;
 }
@@ -510,9 +510,13 @@
         padding-top: .875rem;
     }
 
-    .mod-uems-info-tutoria .uit-student-content,
-    .mod-uems-info-tutoria .uit-full-content {
+    .mod-uems-info-tutoria .uit-student-content {
         padding: 1rem;
+        gap: 1rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-content {
+        padding: 1rem 0;
         gap: 1rem;
     }
 
@@ -524,6 +528,10 @@
     .mod-uems-info-tutoria .uit-full-panel {
         padding: .875rem;
         border-radius: .75rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-panel {
+        padding: .75rem .5rem;
     }
 
     .mod-uems-info-tutoria .uit-role-title {
@@ -591,14 +599,21 @@
         padding: .875rem;
     }
 
-    .mod-uems-info-tutoria .uit-student-content,
-    .mod-uems-info-tutoria .uit-full-content {
+    .mod-uems-info-tutoria .uit-student-content {
         padding: .875rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-content {
+        padding: .875rem 0;
     }
 
     .mod-uems-info-tutoria .uit-card,
     .mod-uems-info-tutoria .uit-full-panel {
         padding: .75rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-panel {
+        padding: .625rem .375rem;
     }
 
     .mod-uems-info-tutoria .uit-person,
