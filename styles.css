@@ -556,12 +556,25 @@
     }
 
     .mod-uems-info-tutoria .uit-full-person .uit-polos-label,
-    .mod-uems-info-tutoria .uit-full-person .uit-polos-list {
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-list,
+    .mod-uems-info-tutoria .uit-full-person .uit-polo-item {
         display: block;
     }
 
     .mod-uems-info-tutoria .uit-full-person .uit-polos-label {
         margin: 0 0 .125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-separator {
+        display: none;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polo-item::before {
+        content: "•";
+        color: #adb5bd;
+        font-size: 1.15em;
+        font-weight: 900;
+        margin-right: .45rem;
     }
 }
 
