@@ -183,7 +183,10 @@
 .mod-uems-info-tutoria .uit-polo-value {
     font-size: 1.3125rem;
     line-height: 1.22;
-    font-weight: 900;
+    font-weight: 700;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
 }
 
 .mod-uems-info-tutoria .uit-student-content {
@@ -216,31 +219,38 @@
 
 /* ── Full hero ── */
 .mod-uems-info-tutoria .uit-full-hero {
-    padding: 2.125rem;
+    padding: 1.5rem 1.75rem;
+}
+
+.mod-uems-info-tutoria .uit-full-hero .uit-big-title {
+    font-size: 1.5rem;
+    line-height: 1.15;
+    letter-spacing: -.02em;
 }
 
 .mod-uems-info-tutoria .uit-full-intro {
     position: relative;
     z-index: 1;
-    margin: .75rem 0 0;
-    opacity: .88;
+    margin: .5rem 0 0;
+    opacity: .82;
     max-width: 760px;
-    line-height: 1.5;
+    font-size: .9375rem;
+    line-height: 1.45;
 }
 
 /* ── Full view content ── */
 .mod-uems-info-tutoria .uit-full-content {
-    padding: 1.875rem 2.125rem 2.25rem;
+    padding: 1rem 1.25rem 1.25rem;
     display: grid;
-    gap: 1.5rem;
+    gap: .875rem;
 }
 
 .mod-uems-info-tutoria .uit-full-panel {
-    border: 1px solid #dee2e6;
-    border-radius: 1.5rem;
-    padding: 1.375rem;
-    background: linear-gradient(180deg, #fff, #fbfdff);
-    box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
+    border: 1px solid #e7edf3;
+    border-radius: 1rem;
+    padding: .875rem 1rem;
+    background: #fff;
+    box-shadow: none;
 }
 
 /* ── Shared role title ── */
@@ -255,10 +265,19 @@
     border-left: 4px solid var(--primary, #0f6cbf);
 }
 
+.mod-uems-info-tutoria .uit-full-panel .uit-role-title {
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
 /* ── People lists ── */
 .mod-uems-info-tutoria .uit-people-list {
     display: grid;
     gap: 1rem;
+}
+
+.mod-uems-info-tutoria .uit-full-panel .uit-people-list {
+    gap: 0;
 }
 
 /* Compact person (student view) */
@@ -279,10 +298,11 @@
 /* Full person (full view) */
 .mod-uems-info-tutoria .uit-full-person {
     display: grid;
-    grid-template-columns: 72px minmax(380px, 1fr) 190px;
-    gap: 1.125rem;
-    align-items: center;
-    padding-bottom: 1.125rem;
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: .75rem;
+    row-gap: .125rem;
+    align-items: start;
+    padding: .625rem 0;
     border-bottom: 1px solid #eef2f6;
 }
 
@@ -302,9 +322,10 @@
 }
 
 .mod-uems-info-tutoria .uit-full-person .uit-photo {
-    width: 72px;
-    height: 72px;
-    border-radius: 1.25rem;
+    grid-row: 1 / span 2;
+    width: 44px;
+    height: 44px;
+    border-radius: .75rem;
 }
 
 /* ── Name ── */
@@ -313,6 +334,12 @@
     line-height: 1.15;
     font-weight: 900;
     margin-bottom: .3125rem;
+}
+
+.mod-uems-info-tutoria .uit-full-person .uit-name {
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-bottom: 0;
 }
 
 .mod-uems-info-tutoria .uit-name a {
@@ -327,11 +354,15 @@
 
 /* ── Polos text (full view) ── */
 .mod-uems-info-tutoria .uit-polos {
+    grid-column: 2;
     color: var(--dark, #343a40);
     font-size: .875rem;
     line-height: 1.45;
-    text-align: right;
-    font-weight: 700;
+    text-align: left;
+    font-weight: 400;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
 }
 
 .mod-uems-info-tutoria .uit-polos-label {
@@ -342,6 +373,44 @@
     text-transform: uppercase;
     letter-spacing: .08em;
     margin-bottom: .25rem;
+}
+
+.mod-uems-info-tutoria .uit-full-person .uit-polos-label {
+    display: inline;
+    font-size: .6875rem;
+    letter-spacing: .06em;
+    margin: 0 .35rem 0 0;
+}
+
+.mod-uems-info-tutoria .uit-full-person .uit-polo-item::before {
+    content: "•";
+    color: #adb5bd;
+    font-size: 1.15em;
+    font-weight: 900;
+    margin: 0 .45rem 0 .7rem;
+}
+
+.mod-uems-info-tutoria .uit-full-person .uit-polo-item:first-child::before {
+    margin-left: 0;
+}
+
+/* ── Wide desktop: use horizontal space in full view ── */
+@media (min-width: 1100px) {
+    .mod-uems-info-tutoria .uit-full-person {
+        grid-template-columns: 44px minmax(260px, 1fr) minmax(220px, 34%);
+        align-items: center;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-photo {
+        grid-row: 1;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polos {
+        grid-column: 3;
+        grid-row: 1;
+        align-self: center;
+        text-align: right;
+    }
 }
 
 /* ── Empty state ── */
@@ -402,6 +471,10 @@
         border-radius: 1rem;
     }
 
+    .mod-uems-info-tutoria .uit-full-panel {
+        padding: .875rem 1rem;
+    }
+
     .mod-uems-info-tutoria .uit-photo,
     .mod-uems-info-tutoria .uit-full-person .uit-photo {
         width: 56px;
@@ -409,13 +482,20 @@
         border-radius: .875rem;
     }
 
+    .mod-uems-info-tutoria .uit-full-person .uit-photo {
+        width: 44px;
+        height: 44px;
+        border-radius: .75rem;
+    }
+
     .mod-uems-info-tutoria .uit-name {
         font-size: 1.125rem;
     }
 
     .mod-uems-info-tutoria .uit-full-person {
-        grid-template-columns: 56px 1fr;
-        gap: .75rem;
+        grid-template-columns: 44px minmax(0, 1fr);
+        column-gap: .75rem;
+        row-gap: .125rem;
         align-items: start;
     }
 
@@ -453,9 +533,13 @@
         padding-top: .875rem;
     }
 
-    .mod-uems-info-tutoria .uit-student-content,
-    .mod-uems-info-tutoria .uit-full-content {
+    .mod-uems-info-tutoria .uit-student-content {
         padding: 1rem;
+        gap: 1rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-content {
+        padding: 1rem 0;
         gap: 1rem;
     }
 
@@ -467,6 +551,10 @@
     .mod-uems-info-tutoria .uit-full-panel {
         padding: .875rem;
         border-radius: .75rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-panel {
+        padding: .75rem .5rem;
     }
 
     .mod-uems-info-tutoria .uit-role-title {
@@ -484,12 +572,32 @@
         border-radius: .75rem;
     }
 
+    .mod-uems-info-tutoria .uit-full-person .uit-photo {
+        width: 42px;
+        height: 42px;
+        border-radius: .6875rem;
+    }
+
     .mod-uems-info-tutoria .uit-name {
         font-size: 1rem;
     }
 
     .mod-uems-info-tutoria .uit-person {
         gap: .75rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-label,
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-list,
+    .mod-uems-info-tutoria .uit-full-person .uit-polo-item {
+        display: block;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polos-label {
+        margin: 0 0 .125rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person .uit-polo-item::before {
+        margin: 0 .45rem 0 0;
     }
 }
 
@@ -506,9 +614,12 @@
         padding: .875rem;
     }
 
-    .mod-uems-info-tutoria .uit-student-content,
-    .mod-uems-info-tutoria .uit-full-content {
+    .mod-uems-info-tutoria .uit-student-content {
         padding: .875rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-content {
+        padding: .875rem 0;
     }
 
     .mod-uems-info-tutoria .uit-card,
@@ -516,10 +627,20 @@
         padding: .75rem;
     }
 
+    .mod-uems-info-tutoria .uit-full-panel {
+        padding: .625rem .375rem;
+    }
+
     .mod-uems-info-tutoria .uit-person,
     .mod-uems-info-tutoria .uit-full-person {
         grid-template-columns: 44px 1fr;
         gap: .625rem;
+    }
+
+    .mod-uems-info-tutoria .uit-full-person {
+        column-gap: .625rem;
+        row-gap: .5rem;
+        padding: .75rem 0;
     }
 
     .mod-uems-info-tutoria .uit-photo,
@@ -529,8 +650,8 @@
         border-radius: .625rem;
     }
 
-    .mod-uems-info-tutoria .uit-polos {
-        grid-column: 1 / -1;
-        padding-left: 52px;
+    .mod-uems-info-tutoria .uit-full-person .uit-polos {
+        grid-column: 2;
+        padding-left: 0;
     }
 }

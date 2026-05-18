@@ -106,8 +106,8 @@ class team_data {
 
         list($in_sql, $params) = $DB->get_in_or_equal(array_keys($polo_groups), \SQL_PARAMS_NAMED, 'pg');
 
-        $rows = $DB->get_records_sql(
-            "SELECT gm.userid, g.name
+        $rs = $DB->get_recordset_sql(
+            "SELECT gm.id, gm.userid, g.name
                FROM {groups_members} gm
                JOIN {groups} g ON g.id = gm.groupid
               WHERE gm.groupid $in_sql",
@@ -115,9 +115,10 @@ class team_data {
         );
 
         $map = [];
-        foreach ($rows as $row) {
+        foreach ($rs as $row) {
             $map[$row->userid][] = $row->name;
         }
+        $rs->close();
         return $map;
     }
 
