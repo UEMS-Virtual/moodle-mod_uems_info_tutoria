@@ -79,7 +79,7 @@ class tutoria_page implements \renderable, \templatable {
      */
     public function export_for_template(\renderer_base $output): array {
         $coursecontext   = \context_course::instance($this->course->id);
-        $isstudent       = team_data::is_student($this->userid, $coursecontext);
+        $showmypolo      = team_data::can_view_my_polo($this->userid, $coursecontext);
         $canmanage       = team_data::can_manage_activities($this->userid, $coursecontext);
         $expectmediators = team_data::expects_mediators($this->instance, $this->course);
         $expecttutors    = team_data::expects_tutors($this->instance, $this->course);
@@ -125,14 +125,14 @@ class tutoria_page implements \renderable, \templatable {
             'has_full_intro' => $fullintro !== '',
         ];
 
-        if ($isstudent) {
+        if ($showmypolo) {
             $student_polos = team_data::get_student_polos($this->userid, $polo_groups);
             $polo_name     = !empty($student_polos) ? $student_polos[0] : '';
             $mine_mediators = $this->filter_by_polo($team['mediators'], $polo_name);
             $mine_tutors    = $this->filter_by_polo($team['tutors'], $polo_name);
 
             return $base + [
-                'isstudent'           => true,
+                'showmypolo'          => true,
                 'supporttitle'        => $supporttitle,
                 'polo_name'           => self::format_polo_name($polo_name),
                 'has_polo'            => !empty($polo_name),
@@ -149,7 +149,7 @@ class tutoria_page implements \renderable, \templatable {
         }
 
         return $base + [
-            'isstudent' => false,
+            'showmypolo' => false,
         ];
     }
 

@@ -59,12 +59,53 @@ final class output_test extends \advanced_testcase {
         $renderable = new tutoria_page($module, $cm, $course, $context, $student->id);
         $data = $renderable->export_for_template($PAGE->get_renderer('core'));
 
-        $this->assertTrue($data['isstudent']);
+        $this->assertTrue($data['showmypolo']);
         $this->assertFalse($data['has_polo']);
         $this->assertFalse($data['mine_has_tutors']);
         $this->assertCount(0, $data['mine_tutors']);
         $this->assertTrue($data['all_has_tutors']);
         $this->assertCount(1, $data['all_tutors']);
+    }
+
+    public function test_my_polo_view_is_limited_to_students_and_on_site_tutors(): void {
+        global $PAGE;
+
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $module = $generator->create_module('uemsinfotutoria', [
+            'course' => $course->id,
+            'expecttutor' => team_data::EXPECT_YES,
+            'expectmediator' => team_data::EXPECT_YES,
+        ]);
+        $cm = get_coursemodule_from_instance('uemsinfotutoria', $module->id, $course->id, false, MUST_EXIST);
+        $context = \context_module::instance($cm->id);
+        $PAGE->set_context($context);
+
+        $tutorroleid = $this->ensure_role(team_data::ROLE_TUTOR, 'Tutor Presencial');
+        $mediatorroleid = $this->ensure_role(team_data::ROLE_MEDIATOR, 'Mediador Pedagógico');
+
+        $student = $generator->create_and_enrol($course, 'student');
+        $tutor = $generator->create_user(['firstname' => 'Ana', 'lastname' => 'Tutora']);
+        $mediator = $generator->create_user(['firstname' => 'Maria', 'lastname' => 'Mediadora']);
+        $teacher = $generator->create_and_enrol($course, 'teacher');
+
+        $generator->enrol_user($tutor->id, $course->id, $tutorroleid);
+        $generator->enrol_user($mediator->id, $course->id, $mediatorroleid);
+
+        $cases = [
+            'student' => [$student, true],
+            'on-site tutor' => [$tutor, true],
+            'pedagogical mediator' => [$mediator, false],
+            'teacher' => [$teacher, false],
+        ];
+
+        foreach ($cases as $label => [$user, $expected]) {
+            $this->setUser($user);
+            $data = (new tutoria_page($module, $cm, $course, $context, $user->id))
+                ->export_for_template($PAGE->get_renderer('core'));
+
+            $this->assertSame($expected, $data['showmypolo'], $label);
+        }
     }
 
     public function test_student_panel_uses_new_default_title_and_hides_empty_full_intro(): void {
@@ -140,7 +181,7 @@ final class output_test extends \advanced_testcase {
 
         $tutorroleid = $this->ensure_role(team_data::ROLE_TUTOR, 'Tutor Presencial');
         $student = $generator->create_and_enrol($course, 'student');
-        $teacher = $generator->create_and_enrol($course, 'editingteacher');
+        $teacher = $generator->create_and_enrol($course, 'teacher');
         $tutor = $generator->create_user(['firstname' => 'Ana', 'lastname' => 'Tutora']);
         $generator->enrol_user($tutor->id, $course->id, $tutorroleid);
 

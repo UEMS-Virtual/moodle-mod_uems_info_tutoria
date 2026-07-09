@@ -33,6 +33,9 @@ defined('MOODLE_INTERNAL') || die();
  */
 class team_data {
 
+    /** Role shortname for students. */
+    const ROLE_STUDENT = 'student';
+
     /** Role shortname for pedagogical mediators. */
     const ROLE_MEDIATOR = 'mod_medpdg';
 
@@ -212,16 +215,42 @@ class team_data {
     }
 
     /**
-     * Return true if the given user should see the student view (Meu polo).
+     * Return true if the given user should see the Meu polo view.
      *
-     * Any user without course management capability is treated as a student.
+     * Meu polo is reserved for students and on-site tutors. Other roles, such as
+     * pedagogical mediators and teachers, use the full list only.
+     *
+     * @param int             $userid
+     * @param \context_course $coursecontext
+     * @return bool
+     */
+    public static function can_view_my_polo(int $userid, \context_course $coursecontext): bool {
+        $roles = \get_user_roles($coursecontext, $userid, false);
+        foreach ($roles as $role) {
+            if ($role->shortname === self::ROLE_STUDENT || $role->shortname === self::ROLE_TUTOR) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return true if the given user has the student role in the course.
      *
      * @param int             $userid
      * @param \context_course $coursecontext
      * @return bool
      */
     public static function is_student(int $userid, \context_course $coursecontext): bool {
-        return !\has_capability('moodle/course:manageactivities', $coursecontext, $userid);
+        $roles = \get_user_roles($coursecontext, $userid, false);
+        foreach ($roles as $role) {
+            if ($role->shortname === self::ROLE_STUDENT) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

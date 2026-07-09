@@ -91,20 +91,20 @@ Regras do modo automático:
 - Mediador Pedagógico é esperado em disciplinas comuns.
 - Mediador Pedagógico não é esperado em reofertas detectadas por `REO`/`REO2` no `shortname`.
 
-## Visualização do estudante
+## Visualização de Estudante e Tutor Presencial
 
-O estudante vê primeiro a aba **Meu polo**, com:
+Estudante e Tutor Presencial veem primeiro a aba **Meu polo**, com:
 
 - nome do seu polo;
 - Tutor(es) Presencial(is) vinculados ao seu polo;
 - Mediador(es) Pedagógico(s) vinculados ao seu polo;
 - opção de alternar para **Lista completa**.
 
-Se o estudante não estiver em nenhum polo, a aba **Meu polo** não usa a Lista completa como fallback.
+Se o usuário não estiver em nenhum polo, a aba **Meu polo** não usa a Lista completa como fallback.
 
-## Visualização de professor/admin
+## Visualização de Mediador Pedagógico, Professor e Admin
 
-Usuários com perfil de gestão da disciplina veem a **Lista completa**, com a equipe vinculada à disciplina inteira.
+Mediador Pedagógico, Professor e Admin veem a **Lista completa**, com a equipe vinculada à disciplina inteira.
 
 ## Estados vazios
 

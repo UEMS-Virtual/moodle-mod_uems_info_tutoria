@@ -9,19 +9,19 @@
 {{!
     @template mod_uemsinfotutoria/tutoria_page
 
-    Main page template. Renders the student view (Meu polo + toggle) or the
-    full institutional view depending on the viewer's role.
+    Main page template. Renders the Meu polo view (Meu polo + toggle) or the
+    full list view depending on the viewer's role.
 
     Context variables:
-    * isstudent            - bool
-    * polo_name            - string   (student only)
-    * has_polo             - bool     (student only)
-    * mine_mediator_label  - string   singular/plural (student only)
-    * mine_tutor_label     - string   singular/plural (student only)
-    * mine_mediators       - array    (student only)
-    * mine_tutors          - array    (student only)
-    * mine_has_mediators   - bool     (student only)
-    * mine_has_tutors      - bool     (student only)
+    * showmypolo           - bool
+    * polo_name            - string   (Meu polo only)
+    * has_polo             - bool     (Meu polo only)
+    * mine_mediator_label  - string   singular/plural (Meu polo only)
+    * mine_tutor_label     - string   singular/plural (Meu polo only)
+    * mine_mediators       - array    (Meu polo only)
+    * mine_tutors          - array    (Meu polo only)
+    * mine_has_mediators   - bool     (Meu polo only)
+    * mine_has_tutors      - bool     (Meu polo only)
     * all_mediators        - array
     * all_tutors           - array
     * all_has_mediators    - bool
@@ -37,7 +37,7 @@
 
     Example context (json):
     {
-        "isstudent": true,
+        "showmypolo": true,
         "polo_name": "Polo UAB de Bataguassu",
         "has_polo": true,
         "mine_mediator_label": "Mediador Pedagógico",
@@ -55,8 +55,8 @@
 {{#hascontent}}
 <div class="mod-uems-info-tutoria">
 
-{{#isstudent}}
-{{! ── Visão do estudante: alternância Meu polo / Lista completa ── }}
+{{#showmypolo}}
+{{! ── Visão Meu polo: alternância Meu polo / Lista completa ── }}
 <div class="uit-switcher-shell" data-region="uemsinfotutoria-switcher">
     <div class="uit-switcher-top">
         <div class="uit-toggle" role="tablist" aria-label="{{#str}} alternarvisualizacao, uemsinfotutoria {{/str}}">
@@ -137,12 +137,12 @@
 
     </div>
 </div>
-{{/isstudent}}
+{{/showmypolo}}
 
-{{^isstudent}}
-{{! ── Visão institucional (demais papéis) ── }}
+{{^showmypolo}}
+{{! ── Visão Lista completa (demais papéis) ── }}
 {{> mod_uemsinfotutoria/full_view }}
-{{/isstudent}}
+{{/showmypolo}}
 
 </div>
 {{#js}}
